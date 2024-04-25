@@ -1,0 +1,1007 @@
+[
+  {
+    "name": "Oversize Bomber Jacket",
+    "description": "Description of Product 1",
+    "brand": "Brand 1",
+    "slug": "oversize-bomber-jacket",
+    "category": {
+      "$oid": "62c46ff0062128444ad59193"
+    },
+    "subCategories": [
+      {
+        "$oid": "62c46ffd062128444ad59199"
+      }
+    ],
+    "details": [
+      {
+        "name": "Color",
+        "value": "White",
+        "_id": {
+          "$oid": "6342cc683a608a950d7e804e"
+        }
+      },
+      {
+        "name": "Style",
+        "value": "Preppy",
+        "_id": {
+          "$oid": "6342cc683a608a950d7e804f"
+        }
+      },
+      {
+        "name": "Pattern Type",
+        "value": "Plaid",
+        "_id": {
+          "$oid": "6342cc683a608a950d7e8050"
+        }
+      },
+      {
+        "name": "Type",
+        "value": "Straight Leg",
+        "_id": {
+          "$oid": "6342cc683a608a950d7e8051"
+        }
+      },
+      {
+        "name": "Closure Type",
+        "value": "Drawstring Waist",
+        "_id": {
+          "$oid": "6342cc683a608a950d7e8052"
+        }
+      },
+      {
+        "name": "",
+        "value": "",
+        "_id": {
+          "$oid": "6342cc683a608a950d7e8053"
+        }
+      }
+    ],
+    "subProducts": [
+      {
+        "sku": "SKU1",
+        "images": [
+          {
+            "url": "/images/highlight/1a.jpg",
+            "public_url": "products/znlfwkgbwb6plgscdzvu"
+          },
+          {
+            "url": "/images/highlight/1b.jpg",
+            "public_url": "products/znlfwkgbwb6plgscdzvu"
+          },
+          {
+            "url": "/images/highlight/1c.jpg",
+            "public_url": "products/znlfwkgbwb6plgscdzvu"
+          },
+          {
+            "url": "/images/highlight/1d.jpg",
+            "public_url": "products/znlfwkgbwb6plgscdzvu"
+          }
+        ],
+        "description_images": [
+          "/images/highlight/1a.jpg",
+          "/images/highlight/1b.jpg"
+        ],
+        "color": {
+          "color": "#393736",
+          "image": "/images/highlight/1b.jpg"
+        },
+        "sizes": [
+          {
+            "size": "S",
+            "qty": 147,
+            "price": 142,
+            "_id": {
+              "$oid": "6342cc683a608a950d7e8055"
+            }
+          },
+          {
+            "size": "M",
+            "qty": 52,
+            "price": 142,
+            "_id": {
+              "$oid": "6342cc683a608a950d7e8056"
+            }
+          },
+          {
+            "size": "L",
+            "qty": 174,
+            "price": 150,
+            "_id": {
+              "$oid": "6342cc683a608a950d7e8057"
+            }
+          },
+          {
+            "size": "XL",
+            "qty": 20,
+            "price": 231,
+            "_id": {
+              "$oid": "6342cc683a608a950d7e8058"
+            }
+          },
+          {
+            "size": "XXL",
+            "qty": 12,
+            "price": 231,
+            "_id": {
+              "$oid": "6342cc683a608a950d7e8059"
+            }
+          }
+        ],
+        "discount": 0,
+        "sold": 0
+      }
+    ],
+    "refundPolicy": "30 days",
+    "rating": 4.5,
+    "numReviews": 10,
+    "shipping": 5.99
+  },
+  {
+    "name": "Cotton Trench Coat",
+    "description": "Description of Product 1",
+    "brand": "Brand 1",
+    "slug": "cotton-trench-coat",
+    "category": {
+      "$oid": "62c46ff0062128444ad59193"
+    },
+    "subCategories": [
+      {
+        "$oid": "62c46ffd062128444ad59199"
+      }
+    ],
+    "details": [
+      {
+        "name": "Color",
+        "value": "White",
+        "_id": {
+          "$oid": "6342cc683a608a950d7e804e"
+        }
+      },
+      {
+        "name": "Style",
+        "value": "Preppy",
+        "_id": {
+          "$oid": "6342cc683a608a950d7e804f"
+        }
+      },
+      {
+        "name": "Pattern Type",
+        "value": "Plaid",
+        "_id": {
+          "$oid": "6342cc683a608a950d7e8050"
+        }
+      },
+      {
+        "name": "Type",
+        "value": "Straight Leg",
+        "_id": {
+          "$oid": "6342cc683a608a950d7e8051"
+        }
+      },
+      {
+        "name": "Closure Type",
+        "value": "Drawstring Waist",
+        "_id": {
+          "$oid": "6342cc683a608a950d7e8052"
+        }
+      },
+      {
+        "name": "",
+        "value": "",
+        "_id": {
+          "$oid": "6342cc683a608a950d7e8053"
+        }
+      }
+    ],
+    "subProducts": [
+      {
+        "sku": "SKU1",
+        "images": [
+          {
+            "url": "/images/highlight/3a.jpg",
+            "public_url": "products/znlfwkgbwb6plgscdzvu"
+          },
+          {
+            "url": "/images/highlight/3b.jpg",
+            "public_url": "products/znlfwkgbwb6plgscdzvu"
+          }
+        ],
+        "description_images": [
+          "/images/highlight/1a.jpg",
+          "/images/highlight/1b.jpg"
+        ],
+        "color": {
+          "color": "#393736",
+          "image": "/images/highlight/3b.jpg"
+        },
+        "sizes": [
+          {
+            "size": "S",
+            "qty": 147,
+            "price": 142,
+            "_id": {
+              "$oid": "6342cc683a608a950d7e8055"
+            }
+          },
+          {
+            "size": "M",
+            "qty": 52,
+            "price": 142,
+            "_id": {
+              "$oid": "6342cc683a608a950d7e8056"
+            }
+          },
+          {
+            "size": "L",
+            "qty": 174,
+            "price": 150,
+            "_id": {
+              "$oid": "6342cc683a608a950d7e8057"
+            }
+          },
+          {
+            "size": "XL",
+            "qty": 20,
+            "price": 231,
+            "_id": {
+              "$oid": "6342cc683a608a950d7e8058"
+            }
+          },
+          {
+            "size": "XXL",
+            "qty": 12,
+            "price": 231,
+            "_id": {
+              "$oid": "6342cc683a608a950d7e8059"
+            }
+          }
+        ],
+        "discount": 0,
+        "sold": 0
+      },
+      {
+        "sku": "SKU1",
+        "images": [
+          {
+            "url": "/images/highlight/3c.jpg",
+            "public_url": "products/znlfwkgbwb6plgscdzvu"
+          },
+          {
+            "url": "/images/highlight/3d.jpg",
+            "public_url": "products/znlfwkgbwb6plgscdzvu"
+          },
+          {
+            "url": "/images/highlight/3e.jpg",
+            "public_url": "products/znlfwkgbwb6plgscdzvu"
+          }
+        ],
+        "description_images": [
+          "/images/highlight/1a.jpg",
+          "/images/highlight/1b.jpg"
+        ],
+        "color": {
+          "color": "#000000",
+          "image": "/images/highlight/3d.jpg"
+        },
+        "sizes": [
+          {
+            "size": "S",
+            "qty": 147,
+            "price": 142,
+            "_id": {
+              "$oid": "6342cc683a608a950d7e8055"
+            }
+          },
+          {
+            "size": "M",
+            "qty": 52,
+            "price": 142,
+            "_id": {
+              "$oid": "6342cc683a608a950d7e8056"
+            }
+          },
+          {
+            "size": "L",
+            "qty": 174,
+            "price": 150,
+            "_id": {
+              "$oid": "6342cc683a608a950d7e8057"
+            }
+          },
+          {
+            "size": "XL",
+            "qty": 20,
+            "price": 231,
+            "_id": {
+              "$oid": "6342cc683a608a950d7e8058"
+            }
+          },
+          {
+            "size": "XXL",
+            "qty": 12,
+            "price": 231,
+            "_id": {
+              "$oid": "6342cc683a608a950d7e8059"
+            }
+          }
+        ],
+        "discount": 0,
+        "sold": 0
+      }
+    ],
+    "refundPolicy": "30 days",
+    "rating": 4.5,
+    "numReviews": 10,
+    "shipping": 5.99
+  },
+  {
+    "name": "Oversize Bomber Jacket",
+    "description": "Description of Product 1",
+    "brand": "Brand 1",
+    "slug": "oversize-bomber-jacket",
+    "category": {
+      "$oid": "62c46ff0062128444ad59193"
+    },
+    "subCategories": [
+      {
+        "$oid": "62c46ffd062128444ad59199"
+      }
+    ],
+    "details": [
+      {
+        "name": "Color",
+        "value": "White",
+        "_id": {
+          "$oid": "6342cc683a608a950d7e804e"
+        }
+      },
+      {
+        "name": "Style",
+        "value": "Preppy",
+        "_id": {
+          "$oid": "6342cc683a608a950d7e804f"
+        }
+      },
+      {
+        "name": "Pattern Type",
+        "value": "Plaid",
+        "_id": {
+          "$oid": "6342cc683a608a950d7e8050"
+        }
+      },
+      {
+        "name": "Type",
+        "value": "Straight Leg",
+        "_id": {
+          "$oid": "6342cc683a608a950d7e8051"
+        }
+      },
+      {
+        "name": "Closure Type",
+        "value": "Drawstring Waist",
+        "_id": {
+          "$oid": "6342cc683a608a950d7e8052"
+        }
+      },
+      {
+        "name": "",
+        "value": "",
+        "_id": {
+          "$oid": "6342cc683a608a950d7e8053"
+        }
+      }
+    ],
+    "subProducts": [
+      {
+        "sku": "SKU1",
+        "images": [
+          {
+            "url": "/images/highlight/1a.jpg",
+            "public_url": "products/znlfwkgbwb6plgscdzvu"
+          },
+          {
+            "url": "/images/highlight/1b.jpg",
+            "public_url": "products/znlfwkgbwb6plgscdzvu"
+          },
+          {
+            "url": "/images/highlight/1c.jpg",
+            "public_url": "products/znlfwkgbwb6plgscdzvu"
+          },
+          {
+            "url": "/images/highlight/1d.jpg",
+            "public_url": "products/znlfwkgbwb6plgscdzvu"
+          }
+        ],
+        "description_images": [
+          "/images/highlight/1a.jpg",
+          "/images/highlight/1b.jpg"
+        ],
+        "color": {
+          "color": "#393736",
+          "image": "/images/highlight/1b.jpg"
+        },
+        "sizes": [
+          {
+            "size": "S",
+            "qty": 147,
+            "price": 142,
+            "_id": {
+              "$oid": "6342cc683a608a950d7e8055"
+            }
+          },
+          {
+            "size": "M",
+            "qty": 52,
+            "price": 142,
+            "_id": {
+              "$oid": "6342cc683a608a950d7e8056"
+            }
+          },
+          {
+            "size": "L",
+            "qty": 174,
+            "price": 150,
+            "_id": {
+              "$oid": "6342cc683a608a950d7e8057"
+            }
+          },
+          {
+            "size": "XL",
+            "qty": 20,
+            "price": 231,
+            "_id": {
+              "$oid": "6342cc683a608a950d7e8058"
+            }
+          },
+          {
+            "size": "XXL",
+            "qty": 12,
+            "price": 231,
+            "_id": {
+              "$oid": "6342cc683a608a950d7e8059"
+            }
+          }
+        ],
+        "discount": 0,
+        "sold": 0
+      }
+    ],
+    "refundPolicy": "30 days",
+    "rating": 4.5,
+    "numReviews": 10,
+    "shipping": 5.99
+  },
+  {
+    "name": "Cotton Trench Coat",
+    "description": "Description of Product 1",
+    "brand": "Brand 1",
+    "slug": "cotton-trench-coat",
+    "category": {
+      "$oid": "62c46ff0062128444ad59193"
+    },
+    "subCategories": [
+      {
+        "$oid": "62c46ffd062128444ad59199"
+      }
+    ],
+    "details": [
+      {
+        "name": "Color",
+        "value": "White",
+        "_id": {
+          "$oid": "6342cc683a608a950d7e804e"
+        }
+      },
+      {
+        "name": "Style",
+        "value": "Preppy",
+        "_id": {
+          "$oid": "6342cc683a608a950d7e804f"
+        }
+      },
+      {
+        "name": "Pattern Type",
+        "value": "Plaid",
+        "_id": {
+          "$oid": "6342cc683a608a950d7e8050"
+        }
+      },
+      {
+        "name": "Type",
+        "value": "Straight Leg",
+        "_id": {
+          "$oid": "6342cc683a608a950d7e8051"
+        }
+      },
+      {
+        "name": "Closure Type",
+        "value": "Drawstring Waist",
+        "_id": {
+          "$oid": "6342cc683a608a950d7e8052"
+        }
+      },
+      {
+        "name": "",
+        "value": "",
+        "_id": {
+          "$oid": "6342cc683a608a950d7e8053"
+        }
+      }
+    ],
+    "subProducts": [
+      {
+        "sku": "SKU1",
+        "images": [
+          {
+            "url": "/images/highlight/3a.jpg",
+            "public_url": "products/znlfwkgbwb6plgscdzvu"
+          },
+          {
+            "url": "/images/highlight/3b.jpg",
+            "public_url": "products/znlfwkgbwb6plgscdzvu"
+          }
+        ],
+        "description_images": [
+          "/images/highlight/1a.jpg",
+          "/images/highlight/1b.jpg"
+        ],
+        "color": {
+          "color": "#393736",
+          "image": "/images/highlight/3b.jpg"
+        },
+        "sizes": [
+          {
+            "size": "S",
+            "qty": 147,
+            "price": 142,
+            "_id": {
+              "$oid": "6342cc683a608a950d7e8055"
+            }
+          },
+          {
+            "size": "M",
+            "qty": 52,
+            "price": 142,
+            "_id": {
+              "$oid": "6342cc683a608a950d7e8056"
+            }
+          },
+          {
+            "size": "L",
+            "qty": 174,
+            "price": 150,
+            "_id": {
+              "$oid": "6342cc683a608a950d7e8057"
+            }
+          },
+          {
+            "size": "XL",
+            "qty": 20,
+            "price": 231,
+            "_id": {
+              "$oid": "6342cc683a608a950d7e8058"
+            }
+          },
+          {
+            "size": "XXL",
+            "qty": 12,
+            "price": 231,
+            "_id": {
+              "$oid": "6342cc683a608a950d7e8059"
+            }
+          }
+        ],
+        "discount": 0,
+        "sold": 0
+      },
+      {
+        "sku": "SKU1",
+        "images": [
+          {
+            "url": "/images/highlight/3c.jpg",
+            "public_url": "products/znlfwkgbwb6plgscdzvu"
+          },
+          {
+            "url": "/images/highlight/3d.jpg",
+            "public_url": "products/znlfwkgbwb6plgscdzvu"
+          },
+          {
+            "url": "/images/highlight/3e.jpg",
+            "public_url": "products/znlfwkgbwb6plgscdzvu"
+          }
+        ],
+        "description_images": [
+          "/images/highlight/1a.jpg",
+          "/images/highlight/1b.jpg"
+        ],
+        "color": {
+          "color": "#000000",
+          "image": "/images/highlight/3d.jpg"
+        },
+        "sizes": [
+          {
+            "size": "S",
+            "qty": 147,
+            "price": 142,
+            "_id": {
+              "$oid": "6342cc683a608a950d7e8055"
+            }
+          },
+          {
+            "size": "M",
+            "qty": 52,
+            "price": 142,
+            "_id": {
+              "$oid": "6342cc683a608a950d7e8056"
+            }
+          },
+          {
+            "size": "L",
+            "qty": 174,
+            "price": 150,
+            "_id": {
+              "$oid": "6342cc683a608a950d7e8057"
+            }
+          },
+          {
+            "size": "XL",
+            "qty": 20,
+            "price": 231,
+            "_id": {
+              "$oid": "6342cc683a608a950d7e8058"
+            }
+          },
+          {
+            "size": "XXL",
+            "qty": 12,
+            "price": 231,
+            "_id": {
+              "$oid": "6342cc683a608a950d7e8059"
+            }
+          }
+        ],
+        "discount": 0,
+        "sold": 0
+      }
+    ],
+    "refundPolicy": "30 days",
+    "rating": 4.5,
+    "numReviews": 10,
+    "shipping": 5.99
+  },
+  {
+    "name": "Oversize Bomber Jacket",
+    "description": "Description of Product 1",
+    "brand": "Brand 1",
+    "slug": "oversize-bomber-jacket",
+    "category": {
+      "$oid": "62c46ff0062128444ad59193"
+    },
+    "subCategories": [
+      {
+        "$oid": "62c46ffd062128444ad59199"
+      }
+    ],
+    "details": [
+      {
+        "name": "Color",
+        "value": "White",
+        "_id": {
+          "$oid": "6342cc683a608a950d7e804e"
+        }
+      },
+      {
+        "name": "Style",
+        "value": "Preppy",
+        "_id": {
+          "$oid": "6342cc683a608a950d7e804f"
+        }
+      },
+      {
+        "name": "Pattern Type",
+        "value": "Plaid",
+        "_id": {
+          "$oid": "6342cc683a608a950d7e8050"
+        }
+      },
+      {
+        "name": "Type",
+        "value": "Straight Leg",
+        "_id": {
+          "$oid": "6342cc683a608a950d7e8051"
+        }
+      },
+      {
+        "name": "Closure Type",
+        "value": "Drawstring Waist",
+        "_id": {
+          "$oid": "6342cc683a608a950d7e8052"
+        }
+      },
+      {
+        "name": "",
+        "value": "",
+        "_id": {
+          "$oid": "6342cc683a608a950d7e8053"
+        }
+      }
+    ],
+    "subProducts": [
+      {
+        "sku": "SKU1",
+        "images": [
+          {
+            "url": "/images/highlight/1a.jpg",
+            "public_url": "products/znlfwkgbwb6plgscdzvu"
+          },
+          {
+            "url": "/images/highlight/1b.jpg",
+            "public_url": "products/znlfwkgbwb6plgscdzvu"
+          },
+          {
+            "url": "/images/highlight/1c.jpg",
+            "public_url": "products/znlfwkgbwb6plgscdzvu"
+          },
+          {
+            "url": "/images/highlight/1d.jpg",
+            "public_url": "products/znlfwkgbwb6plgscdzvu"
+          }
+        ],
+        "description_images": [
+          "/images/highlight/1a.jpg",
+          "/images/highlight/1b.jpg"
+        ],
+        "color": {
+          "color": "#393736",
+          "image": "/images/highlight/1b.jpg"
+        },
+        "sizes": [
+          {
+            "size": "S",
+            "qty": 147,
+            "price": 142,
+            "_id": {
+              "$oid": "6342cc683a608a950d7e8055"
+            }
+          },
+          {
+            "size": "M",
+            "qty": 52,
+            "price": 142,
+            "_id": {
+              "$oid": "6342cc683a608a950d7e8056"
+            }
+          },
+          {
+            "size": "L",
+            "qty": 174,
+            "price": 150,
+            "_id": {
+              "$oid": "6342cc683a608a950d7e8057"
+            }
+          },
+          {
+            "size": "XL",
+            "qty": 20,
+            "price": 231,
+            "_id": {
+              "$oid": "6342cc683a608a950d7e8058"
+            }
+          },
+          {
+            "size": "XXL",
+            "qty": 12,
+            "price": 231,
+            "_id": {
+              "$oid": "6342cc683a608a950d7e8059"
+            }
+          }
+        ],
+        "discount": 0,
+        "sold": 0
+      }
+    ],
+    "refundPolicy": "30 days",
+    "rating": 4.5,
+    "numReviews": 10,
+    "shipping": 5.99
+  },
+  {
+    "name": "Cotton Trench Coat",
+    "description": "Description of Product 1",
+    "brand": "Brand 1",
+    "slug": "cotton-trench-coat",
+    "category": {
+      "$oid": "62c46ff0062128444ad59193"
+    },
+    "subCategories": [
+      {
+        "$oid": "62c46ffd062128444ad59199"
+      }
+    ],
+    "details": [
+      {
+        "name": "Color",
+        "value": "White",
+        "_id": {
+          "$oid": "6342cc683a608a950d7e804e"
+        }
+      },
+      {
+        "name": "Style",
+        "value": "Preppy",
+        "_id": {
+          "$oid": "6342cc683a608a950d7e804f"
+        }
+      },
+      {
+        "name": "Pattern Type",
+        "value": "Plaid",
+        "_id": {
+          "$oid": "6342cc683a608a950d7e8050"
+        }
+      },
+      {
+        "name": "Type",
+        "value": "Straight Leg",
+        "_id": {
+          "$oid": "6342cc683a608a950d7e8051"
+        }
+      },
+      {
+        "name": "Closure Type",
+        "value": "Drawstring Waist",
+        "_id": {
+          "$oid": "6342cc683a608a950d7e8052"
+        }
+      },
+      {
+        "name": "",
+        "value": "",
+        "_id": {
+          "$oid": "6342cc683a608a950d7e8053"
+        }
+      }
+    ],
+    "subProducts": [
+      {
+        "sku": "SKU1",
+        "images": [
+          {
+            "url": "/images/highlight/3a.jpg",
+            "public_url": "products/znlfwkgbwb6plgscdzvu"
+          },
+          {
+            "url": "/images/highlight/3b.jpg",
+            "public_url": "products/znlfwkgbwb6plgscdzvu"
+          }
+        ],
+        "description_images": [
+          "/images/highlight/1a.jpg",
+          "/images/highlight/1b.jpg"
+        ],
+        "color": {
+          "color": "#393736",
+          "image": "/images/highlight/3b.jpg"
+        },
+        "sizes": [
+          {
+            "size": "S",
+            "qty": 147,
+            "price": 142,
+            "_id": {
+              "$oid": "6342cc683a608a950d7e8055"
+            }
+          },
+          {
+            "size": "M",
+            "qty": 52,
+            "price": 142,
+            "_id": {
+              "$oid": "6342cc683a608a950d7e8056"
+            }
+          },
+          {
+            "size": "L",
+            "qty": 174,
+            "price": 150,
+            "_id": {
+              "$oid": "6342cc683a608a950d7e8057"
+            }
+          },
+          {
+            "size": "XL",
+            "qty": 20,
+            "price": 231,
+            "_id": {
+              "$oid": "6342cc683a608a950d7e8058"
+            }
+          },
+          {
+            "size": "XXL",
+            "qty": 12,
+            "price": 231,
+            "_id": {
+              "$oid": "6342cc683a608a950d7e8059"
+            }
+          }
+        ],
+        "discount": 0,
+        "sold": 0
+      },
+      {
+        "sku": "SKU1",
+        "images": [
+          {
+            "url": "/images/highlight/3c.jpg",
+            "public_url": "products/znlfwkgbwb6plgscdzvu"
+          },
+          {
+            "url": "/images/highlight/3d.jpg",
+            "public_url": "products/znlfwkgbwb6plgscdzvu"
+          },
+          {
+            "url": "/images/highlight/3e.jpg",
+            "public_url": "products/znlfwkgbwb6plgscdzvu"
+          }
+        ],
+        "description_images": [
+          "/images/highlight/1a.jpg",
+          "/images/highlight/1b.jpg"
+        ],
+        "color": {
+          "color": "#000000",
+          "image": "/images/highlight/3d.jpg"
+        },
+        "sizes": [
+          {
+            "size": "S",
+            "qty": 147,
+            "price": 142,
+            "_id": {
+              "$oid": "6342cc683a608a950d7e8055"
+            }
+          },
+          {
+            "size": "M",
+            "qty": 52,
+            "price": 142,
+            "_id": {
+              "$oid": "6342cc683a608a950d7e8056"
+            }
+          },
+          {
+            "size": "L",
+            "qty": 174,
+            "price": 150,
+            "_id": {
+              "$oid": "6342cc683a608a950d7e8057"
+            }
+          },
+          {
+            "size": "XL",
+            "qty": 20,
+            "price": 231,
+            "_id": {
+              "$oid": "6342cc683a608a950d7e8058"
+            }
+          },
+          {
+            "size": "XXL",
+            "qty": 12,
+            "price": 231,
+            "_id": {
+              "$oid": "6342cc683a608a950d7e8059"
+            }
+          }
+        ],
+        "discount": 0,
+        "sold": 0
+      }
+    ],
+    "refundPolicy": "30 days",
+    "rating": 4.5,
+    "numReviews": 10,
+    "shipping": 5.99
+  }
+]

@@ -1,0 +1,212 @@
+.meta-header-area.sticky {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    // z-index: 99;
+}
+
+
+
+// .swiper-slide {
+//     text-align: center;
+//     font-size: 18px;
+//     background: #fff;
+
+//     /* Center slide text vertically */
+//     display: flex;
+//     justify-content: center;
+//     align-items: center;
+// }
+
+// .swiper-slide img {
+//     display: block;
+//     width: 100%;
+//     height: 100%;
+//     object-fit: cover;
+// }
+
+.bar-icon {
+    width: 20px;
+    height: 14px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    overflow: hidden;
+    cursor: pointer;
+
+    span {
+        background: #000;
+        width: 100%;
+        height: 2px;
+        display: inline-block;
+
+        &:nth-child(2) {
+            margin-left: 9px;
+            transition: .3s;
+        }
+    }
+
+    &:hover span:nth-child(2) {
+        margin-left: 0
+    }
+}
+
+.pop-fixed {
+    align-items: center;
+    // background: #fff;
+    background: #DA3F3F;
+    border-radius: 0 0 5px 5px;
+    color: #fff;
+    cursor: pointer;
+    display: flex;
+    height: 40px;
+    left: 0;
+    font-family: inherit;
+    padding: 0 25px;
+    position: fixed;
+    text-transform: uppercase;
+    top: 50%;
+    transform: translateY(-50%) rotate(-90deg);
+    transform-origin: 40px bottom;
+    z-index: 11;
+}
+
+
+// .swiper-pagination-bullet {
+//     width: 1px;
+//     height: 1px;
+//     /* Example margin */
+// }
+
+
+/* Style for active pagination bullet */
+.swiper-pagination-bullet.swiper-pagination-bullet-active {
+    background-color: transparent !important;
+    width: 15px;
+    height: 15px;
+    border: solid;
+    border: 1px solid;
+    border-color: #000;
+}
+
+.swiper-pagination-bullets .swiper-pagination-bullet,
+.swiper-pagination-vertical.swiper-pagination-bullets .swiper-pagination-bullet {
+    background-color: #000;
+    opacity: 1;
+}
+
+.swiper-pagination-bullets,
+.swiper-pagination-vertical.swiper-pagination-bullets.swiper-pagination-bullet {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    transition: all 300ms ease-in;
+    transition-delay: 300ms;
+
+    // background-color: black;
+
+}
+
+
+.swiper-pagination-fraction {
+    right: 0 !important;
+    position: absolute;
+    background-color: transparent;
+    border: 1px solid #dededede;
+    // bottom: 100%;
+    width: 120px !important;
+    margin-left: auto;
+    margin-right: auto;
+    padding-top: 8px;
+    padding-bottom: 8px;
+    border-radius: 44px;
+}
+
+@media (min-width: 780px) {
+
+    .swiper-pagination-bullets,
+    .swiper-pagination-vertical.swiper-pagination-bullets.swiper-pagination-bullet {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        position: absolute;
+        right: 0;
+        top: 50%;
+        transform: translateY(-50%);
+    }
+}
+
+
+@keyframes moveUpDown {
+    0% {
+        transform: translateY(8px);
+        /* Move content down by 8px */
+    }
+
+    100% {
+        transform: translateY(-8px);
+        /* Move content up by 8px */
+    }
+}
+
+.animate-updown {
+    animation: moveUpDown 3s infinite alternate;
+    /* Apply the animation */
+}
+
+.paddings {
+    &:nth-child(1) {
+        padding-left: 0;
+        padding-right: 18.5px;
+    }
+
+    &:nth-child(3) {
+        padding-left: 0;
+        padding-left: 18.5px;
+        padding-right: 0px;
+    }
+}
+
+@media (max-width:1024px) {
+    .paddings {
+
+        &:nth-child(1),
+        &:nth-child(2),
+        &:nth-child(3) {
+            padding-left: 0 !important;
+            padding-right: 0 !important;
+        }
+    }
+}
+
+.shadowNow {
+    box-shadow: 0 0 0 1px rgb(34, 34, 34), inset 0 0 0 4px rgb(255, 255, 255);
+}
+
+.paddingss {
+    &:nth-child(1) {
+        padding-left: 0;
+        padding-right: 18.5px;
+    }
+
+    &:nth-child(3) {
+        padding-left: 0;
+        padding-left: 18.5px;
+        padding-right: 0px;
+    }
+}
+
+@media (max-width:1024px) {
+    .paddingss {
+
+        &:nth-child(1),
+        &:nth-child(2),
+        &:nth-child(3) {
+            padding-left: 10px !important;
+            padding-right: 10px !important;
+        }
+    }
+}
