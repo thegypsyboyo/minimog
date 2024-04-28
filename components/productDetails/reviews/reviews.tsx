@@ -1,6 +1,7 @@
 import { Rating } from '@mui/material';
 import Image from 'next/image';
 import React from 'react'
+import { AiOutlineLike } from "react-icons/ai";
 
 const Reviews = ({ review }: any) => {
     // const data = "";
@@ -43,12 +44,30 @@ const Reviews = ({ review }: any) => {
                             alt=""
                             width={1300}
                             height={1300}
-                            className={"w-[250px] h-[250px] object-cover"}
+                            className={"w-[50px] h-[50px] object-cover rounded-full"}
                         />
                     </div>
                 </p>
             </div>
-
+            <div className={""}>
+                <div className={"flex"}>
+                    {review.images.length > 0 &&
+                        review.images.map((img, i) =>
+                            <Image src={img?.url} width={1300} height={1300} alt="" key={i}
+                                className={"w-[250px] h-[250px] object-cover"}
+                            />
+                        )}
+                </div>
+                <div className={""}>
+                    <div className={""}>
+                        {review.likes && review.likes?.likes}
+                        <AiOutlineLike />
+                    </div>
+                    <div className={""}>
+                        {review?.updatedAt?.slice(0, 10)}
+                    </div>
+                </div>
+            </div>
         </div>
     )
 }
