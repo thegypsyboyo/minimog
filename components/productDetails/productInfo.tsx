@@ -2,7 +2,7 @@
 /* eslint-disable eqeqeq */
 import { useRouter } from 'next/router'
 import React, { useEffect, useState } from 'react'
-import { TbMinus, TbPlus } from "react-icons/tb"
+import { TbMinus, TbPlus, TbTruckDelivery } from "react-icons/tb"
 
 import Link from 'next/link';
 import Image from 'next/image';
@@ -10,6 +10,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import axios from 'axios';
 import { addToCart, updateCart } from '@/store/cartSlice';
 import { BsHeart } from 'react-icons/bs';
+import { PiPackageBold } from "react-icons/pi";
+import ProductData from './productData';
+import { ApplePayIcon, GooglePayIcon, MastercardIcon, MetaPayIcon, PayPalIcon, VisaIcon } from '../icons';
 
 // import Layout from '../layout';
 
@@ -181,6 +184,44 @@ const ProductInfo = ({ product, setActiveImg }: any) => {
                     {error && <span className="text-red-600 mt-2">{error}</span>}
 
                     {/* <div className="">Add to cart</div> */}
+                </div>
+                <div className='pb-[10px] border-b border-b-black/10'>
+                    <ProductData details={[product.description, ...product.details]} />
+                </div>
+                <div className="mt-5">
+                    <div className="flex items-center gap-5">
+                        <h1 className="font-medium text-lg flex items-center gap-2 "><TbTruckDelivery className='text-2xl' /> Estimated Delivery : </h1>
+                        <span className=""> 05 May - 10 May</span>
+                    </div>
+                    <div className="flex items-center gap-5 mt-3">
+                        <h1 className="font-medium text-lg flex items-center gap-2 "><PiPackageBold className='text-2xl' /> Free shipping and returns : </h1>
+                        <span className=""> On all orders above $75</span>
+                    </div>
+                </div>
+                <div className="bg-[#f8f8f8] p-[20px] rounded-[5px] mt-6">
+                    <ul className="flex flex-row gap-[16px]  items-center justify-center">
+                        <li className="">
+                            <ApplePayIcon width={38} height={24} title="Apple Pay" />
+                        </li>
+                        <li className="">
+                            <MetaPayIcon width={38} height={24} title="Meta Pay" />
+                        </li>
+                        <li className="">
+                            <GooglePayIcon width={38} height={24} title="Mastercard" />
+                        </li>
+                        <li className="">
+                            <PayPalIcon width={38} height={24} title="Mastercard" />
+                        </li>
+                        <li className="">
+                            <MastercardIcon width={38} height={24} title="Mastercard" />
+                        </li>
+                        <li className="">
+                            <VisaIcon width={38} height={24} title="Visa" />
+                        </li>
+                    </ul>
+                    <div className="flex items-center justify-center mt-4 text-balance">
+                        <h1 className="">Garantee safe and secure checkout</h1>
+                    </div>
                 </div>
             </div>
         </section>

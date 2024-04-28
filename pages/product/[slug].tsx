@@ -14,6 +14,8 @@ import MainSwiper from '@/components/productDetails/mainSwiper'
 import ProductInfo from '@/components/productDetails/productInfo'
 import Layout from '@/components/layout'
 
+import Reviews from '@/components/productDetails/reviews'
+
 interface CountryInfo {
     name: string;
     flag: string;
@@ -58,6 +60,7 @@ const ProductDetails = ({ country, currency, product }: Props) => {
                         <MainSwiper activeImg={activeImg} images={product.images} />
                         <ProductInfo product={product} setActiveImg={setActiveImg} />
                     </div>
+                    <Reviews product={product} />
                 </Layout>
             </section>
             <Footer />
