@@ -544,7 +544,7 @@ const Navbar = ({ currency, country }: Props) => {
                                                 <HoverCardTrigger asChild className='mr-0 pr-0'>
                                                     <Button variant="link" className='pt-0 mt-0 hover:no-underline relative'>
                                                         <FaOpencart className='text-2xl' />
-                                                        <span className='right-[-12px] w-[23px] h-[23px] bg-red-500 rounded-full top-[-6px] flex items-center justify-center text-white absolute'>{cart.cartItems.length}</span>
+                                                        <span className='right-[-12px] w-[23px] h-[23px] bg-red-500 rounded-full top-[-6px] flex items-center justify-center text-white absolute'>{cart?.cartItems?.length}</span>
                                                     </Button>
                                                 </HoverCardTrigger>
                                                 <HoverCardContent className="w-52 bg-white">
@@ -552,13 +552,13 @@ const Navbar = ({ currency, country }: Props) => {
                                                         <FaOpencart className='text-2xl' />
                                                         <div className="space-y-1">
                                                             <h4 className="text-sm font-semibold">Your Cart</h4>
-                                                            {cart.cartItems.length === 0 ? (
+                                                            {cart.cartItems?.length === 0 ? (
 
                                                                 <p className="text-sm">
                                                                     Your cart is empty. Lets add something to cart.
                                                                 </p>
                                                             ) : (
-                                                                <p>{cart.cartItems.length}</p>
+                                                                <p>{cart.cartItems?.length}</p>
                                                             )}
                                                         </div>
                                                     </div>

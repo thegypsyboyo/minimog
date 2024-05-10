@@ -1,20 +1,27 @@
 /* eslint-disable no-param-reassign */
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-const initialState = {
+type CartItem = any;
+
+interface CartState {
+    cartItems: CartItem[];
+}
+
+const initialState: CartState = {
     cartItems: [],
 };
+
 export const cartSlice = createSlice({
     name: "cart",
     initialState,
     reducers: {
-        addToCart(state, action) {
+        addToCart(state, action: PayloadAction<CartItem>) {
             state.cartItems.push(action.payload);
         },
-        updateCart(state, action) {
+        updateCart(state, action: PayloadAction<CartItem[]>) {
             state.cartItems = action.payload;
         },
-        emptyCart(state, action) {
+        emptyCart(state) {
             state.cartItems = [];
         },
     },

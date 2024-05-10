@@ -14,7 +14,7 @@ import { BsQuestion, BsShare } from 'react-icons/bs'
 import Share from './share'
 
 const ProductData = ({ details }: any) => {
-    console.log("Details", details)
+    console.log("");
     return (
         <div className='w-full relative mt-12'>
             <div className="w-full flex items-start gap-3 justify-between flex-wrap">

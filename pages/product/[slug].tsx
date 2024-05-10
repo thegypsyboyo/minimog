@@ -37,7 +37,7 @@ interface Props {
 }
 const ProductDetails = ({ country, currency, product }: Props) => {
 
-    console.log("Products:", product)
+    // console.log("Products:", product)
     const [activeImg, setActiveImg] = useState()
     return (
 

@@ -8,7 +8,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { useDispatch, useSelector } from 'react-redux';
 import axios from 'axios';
-import { addToCart, updateCart } from '@/store/cartSlice';
+import { addToCart, emptyCart, updateCart } from '@/store/cartSlice';
 import { BsHeart } from 'react-icons/bs';
 import { PiPackageBold } from "react-icons/pi";
 import ProductData from './productData';
@@ -24,6 +24,7 @@ const ProductInfo = ({ product, setActiveImg }: any) => {
     const [size, setSize] = useState(router.query?.size);
     const [qty, setQty] = useState<number>(1);
     const [error, setError] = useState<any>("");
+    // const { cart } = useSelector((state) => ({ ...state as any }));
     const { cart } = useSelector((state) => ({ ...state as any }));
 
     console.log("Cart", cart);
@@ -37,7 +38,7 @@ const ProductInfo = ({ product, setActiveImg }: any) => {
             setQty(product.quantity)
         }
     }, [product.quantity, qty, router.query.size])
-
+    // dispatch(emptyCart());
     const addToCartHandler = async () => {
         if (!router.query.size) {
             setError("Please select a size!");

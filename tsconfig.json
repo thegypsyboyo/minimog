@@ -23,8 +23,8 @@
     "utils/db.js",
     "pages/api/auth/[...nextauth].js",
     "pages/product/[slug].tsx",
-    "store/cartSlice.js",
-    "store/index.js"
+    "store/cartSlice.ts",
+    "store/index.ts"
   ],
   "exclude": ["node_modules"]
 }

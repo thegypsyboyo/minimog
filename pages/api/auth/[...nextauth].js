@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable no-dupe-keys */
 /* eslint-disable import/no-unresolved */
 /* eslint-disable no-param-reassign */
@@ -79,7 +80,8 @@ export default NextAuth({
     async session({ session, token }) {
       const user = await User.findById(token.sub);
       session.user._id = token.sub || user._id.toString();
-      session.user.role = user.role || "user"
+      session.user.role = user.role || "user";
+      token.role = user.role || "user";
       return session;
     }
   },
