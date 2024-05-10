@@ -21,7 +21,7 @@
     "**/*.ts",
     "**/*.tsx",
     "utils/db.js",
-    "pages/api/auth/[...nextauth].js",
+    "pages/api/auth/[...nextauth].ts",
     "pages/product/[slug].tsx",
     "store/cartSlice.ts",
     "store/index.ts"
