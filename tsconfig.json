@@ -24,7 +24,8 @@
     "pages/api/auth/[...nextauth].ts",
     "pages/product/[slug].tsx",
     "store/cartSlice.ts",
-    "store/index.ts"
+    "store/index.ts",
+    "store/ExpandSlice.ts"
   ],
   "exclude": ["node_modules"]
 }

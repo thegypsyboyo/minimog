@@ -15,8 +15,10 @@ const subSchema = new mongoose.Schema({
         lowercase: true,
         index: true,
     },
-    parent:{
-        ObjectId,
+    parent: {
+        type: ObjectId,
+        ref: "Category",
+        required: true,
     },
 });
 

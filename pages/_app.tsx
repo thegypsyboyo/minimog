@@ -14,9 +14,12 @@ import Head from 'next/head';
 import { Session } from "next-auth";
 import { Jost } from 'next/font/google';
 import { persistStore } from "redux-persist";
+import { ToastContainer } from "react-toastify";
 
 import store from "@/store";
 import { PersistGate } from "redux-persist/integration/react";
+import "react-toastify/dist/ReactToastify.css";
+
 
 interface MyAppProps extends AppProps {
   session: Session;
@@ -45,6 +48,18 @@ export default function App({
       <SessionProvider session={session}>
         <Provider store={store}>
           <PersistGate loading={null} persistor={persistor}>
+            <ToastContainer
+              position="top-right"
+              autoClose={5000}
+              hideProgressBar={false}
+              newestOnTop={false}
+              closeOnClick
+              rtl={false}
+              pauseOnFocusLoss
+              draggable
+              pauseOnHover
+              theme="colored"
+            />
             <main className={`font-noto ${noto.variable}`}>
               <Component {...pageProps} />
             </main>

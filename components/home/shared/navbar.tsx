@@ -131,7 +131,7 @@ const Navbar = ({ currency, country }: Props) => {
     console.log("currentpath:", currentPath)
 
     const { data: session } = useSession();
-    const { cart } = useSelector((state) => ({ ...state }));
+    const { cart } = useSelector((state) => ({ ...(state as Record<string, any>) }));
 
     console.log("Your Country Info:", country);
     console.log("Your Session:", session);
@@ -394,20 +394,20 @@ const Navbar = ({ currency, country }: Props) => {
                                                 <div className="block">
                                                     <div className="flex items-center gap-3">
                                                         <HoverCard>
-                                                            <HoverCardTrigger asChild>
-                                                                <Button variant="link" className='pt-0 mt-0 flex gap-4 items-center outline-none !no-underline '>
+                                                            <HoverCardTrigger asChild className='flex items-center'>
+                                                                <div className='pt-0 mt-0 flex items-center place-content-center cursor-pointer'>
                                                                     <Avatar>
-                                                                        <AvatarImage src={`${session.user?.image}`} alt="user-image" />
+                                                                        <AvatarImage src={`${session.user?.image}`} alt="user-image" className='border-borderColor rounded-full border-[1.4px]' />
                                                                         <AvatarFallback>CN</AvatarFallback>
                                                                     </Avatar>
-                                                                    <div className="flex items-start flex-col">
-                                                                        <h3 className="text-primaryForground font-medium leading-[20px] text-sm flex items-center gap-2">
+                                                                    <div className="flex flex-col h-[25px] justify-center place-content-center">
+                                                                        <h3 className="text-primaryForground font-medium leading-[20px] text-sm flex items-center gap-2 h-fit">
                                                                             Bonjour 👋,
                                                                         </h3>
-                                                                        <span className='text-black text-xs font-medium capitalize'>{`${session.user?.name}`}</span>
+                                                                        <h1 className='text-black text-xs font-medium capitalize p-0 leading-0 m-0 w-[90px] '>{`${session.user?.name}`}</h1>
                                                                     </div>
 
-                                                                </Button>
+                                                                </div>
 
                                                             </HoverCardTrigger>
                                                             <HoverCardContent className="min-w-[330px]  w-full  bg-white flex flex-col justify-between">
@@ -416,7 +416,7 @@ const Navbar = ({ currency, country }: Props) => {
                                                                     {session ? (
                                                                         <div className="flex items-center gap-5">
                                                                             <Avatar>
-                                                                                <AvatarImage src={`${session.user?.image}`} alt="user-image" />
+                                                                                <AvatarImage src={`${session.user?.image}`} alt="user-image" className=" bg-yellow-400" />
                                                                                 <AvatarFallback>CN</AvatarFallback>
                                                                             </Avatar>
                                                                             <h3 className="text-primaryForground flex flex-col items-start font-normal ">

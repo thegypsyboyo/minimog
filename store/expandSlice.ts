@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable no-param-reassign */
 import { createSlice } from "@reduxjs/toolkit";
 
@@ -5,20 +6,20 @@ interface ExpandState {
     expandSidebar: boolean;
 }
 
-const initialState: ExpandState = {
+const initialState = {
     expandSidebar: true,
 };
 
-export const expandSlice = createSlice({
+export const ExpandSlice = createSlice({
     name: "expandSidebar",
     initialState,
     reducers: {
-        toggleSidebar: (state) => {
+        toggleSidebar(state) {
             state.expandSidebar = !state.expandSidebar;
         },
     },
 });
 
-export const { toggleSidebar } = expandSlice.actions;
+export const { toggleSidebar } = ExpandSlice.actions;
 
-export default expandSlice.reducer;
+export default ExpandSlice.reducer; 

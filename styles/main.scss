@@ -210,3 +210,29 @@
         }
     }
 }
+
+/* For WebKit browsers */
+/* Adjust the scrollbar track */
+::-webkit-scrollbar {
+    width: 4px;
+    z-index: 10px !important;
+    // opacity: 0;
+    // margin-left: 20px;
+    // position: absolute;
+    right: 100%;
+    /* width of the scrollbar */
+}
+
+/* Adjust the scrollbar thumb */
+::-webkit-scrollbar-thumb {
+    background-color: rgba(0, 0, 0, 0.2);
+    /* color of the thumb */
+    border-radius: 6px;
+    /* border radius of the thumb */
+}
+
+/* Adjust the scrollbar track */
+::-webkit-scrollbar-track {
+    background-color: rgba(0, 0, 0, 0.1);
+    /* color of the track */
+}

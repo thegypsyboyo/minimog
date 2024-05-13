@@ -16,7 +16,7 @@ const LoginInput: React.FC<MyInputProps> = ({ placeholder, className, type, ...p
         <div className={`my-6 relative bg-white h-[55px] grid grid-cols-[(15% 85%)] ${meta.touched && meta.error ? "mt-[5rem]" : ""}`}>
             <input
                 type={type}
-                name={field.name}
+                // name={field.name}
                 placeholder={placeholder}
                 {...field}
                 {...props}

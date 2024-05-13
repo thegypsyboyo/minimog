@@ -12,8 +12,9 @@ import {
 } from 'redux-persist';
 // import thunk from "redux-thunk";
 import cart from "./cartSlice"
+import expandSidebar from "./ExpandSlice";
 
-const reducers = combineReducers({ cart });
+const reducers = combineReducers({ cart, expandSidebar });
 
 const config = {
     key: "root",
