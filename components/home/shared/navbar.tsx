@@ -40,7 +40,13 @@ import { signIn, signOut, useSession } from 'next-auth/react';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import { AvatarImage } from '@radix-ui/react-avatar';
 import { useRouter } from 'next/router';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+
+
+import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { changeLanguage } from '@/store/languageSlice';
+import { useTranslation } from 'react-i18next';
+
 
 interface CountryInfo {
     name: string;
@@ -126,15 +132,18 @@ const Navbar = ({ currency, country }: Props) => {
     const [isMetaHeaderSticky, setIsMetaHeaderSticky] = useState<boolean>(false);
     const [showButton, setShowButton] = useState(false);
     const router = useRouter();
+    const dispatch = useDispatch();
     const currentPath = router.asPath;
+    // const { language } = useSelector((state) => ({ ...(state as Record<string, any>) }));
 
-    console.log("currentpath:", currentPath)
+
+    // console.log("currentpath:", currentPath)
 
     const { data: session } = useSession();
     const { cart } = useSelector((state) => ({ ...(state as Record<string, any>) }));
 
-    console.log("Your Country Info:", country);
-    console.log("Your Session:", session);
+    // console.log("Your Country Info:", country);
+    // console.log("Your Session:", session);
     const isBrowser = () => typeof window !== 'undefined';
 
     const scrollToTop = () => {
@@ -189,12 +198,22 @@ const Navbar = ({ currency, country }: Props) => {
         return () => window.removeEventListener("scroll", handleScroll);
     }, []);
 
+    // const dispatch = useDispatch();
+    const { t } = useTranslation();
+    const currentLanguage = useSelector((state: any) => state.language.value)
+
+    // console.log("Current language:", currentLanguage);
+
+    const handleLanguageChange = (value: string) => {
+        dispatch(changeLanguage(value));
+    };
+
     return (
         <main className='font-noto'>
             <header className='w-full bg-white text-white font-noto relative'>
-                <div className='hidden header-top-area relative max-h-[40px] text-base py-[14px] pb-[14px] w-full border-b border-b-borderColor text-primaryForground z-10 lg:flex items-center'>
+                <div className='hidden header-top-area relative max-h-[40px] text-base py-[18px] pb-[18px] w-full border-b border-b-borderColor text-primaryForground z-10 lg:flex items-center'>
                     <Layout>
-                        <div className="flex flex-row flex-wrap justify-between w-full ">
+                        <div className="flex flex-row flex-wrap justify-between w-full items-center">
                             <div className="w-[33.333%]">
                                 <div className="flex gap-5 items-center">
                                     <div className="flex items-center gap-2">
@@ -222,11 +241,31 @@ const Navbar = ({ currency, country }: Props) => {
                                 <div className="w-full flex items-center gap-4 justify-end">
                                     <div className="flex items-center gap-2">
                                         <div className="">
-                                            <Image src={`${country?.flag}`} alt='flag' width={90} height={90} className='object-cover rounded-full h-6 w-6' />
+                                            <Avatar className='rounded-full w-6 h-6'>
+                                                <AvatarImage src={`${country?.flag}`} alt='flag' width={90} height={90} className='rounded-full w-full h-full  object-cover' />
+                                                <AvatarFallback>Kenya</AvatarFallback>
+                                            </Avatar>
                                         </div>
                                         <div className="text-sm font-normal capitalize">{country?.name} ({currency?.code} {currency?.symbol})</div>
                                     </div>
-                                    <div className="">English</div>
+                                    <div className="">
+                                        <Select onValueChange={handleLanguageChange}>
+                                            <SelectTrigger className="w-[160px] outline-none border-transparent rounded-[4px] my-1 capitalize">
+                                                <SelectValue
+                                                    placeholder={t('Select Language')}
+                                                    defaultValue={currentLanguage}
+                                                    className='capitalize'
+                                                />
+                                            </SelectTrigger>
+                                            <SelectContent className="bg-white">
+                                                <SelectGroup>
+                                                    <SelectLabel>{t('Languages')}</SelectLabel>
+                                                    <SelectItem value="en" className="cursor-pointer capitalize">{t('english')}</SelectItem>
+                                                    <SelectItem value="fr" className="cursor-pointer capitalize">{t('french')}</SelectItem>
+                                                </SelectGroup>
+                                            </SelectContent>
+                                        </Select>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -397,7 +436,7 @@ const Navbar = ({ currency, country }: Props) => {
                                                             <HoverCardTrigger asChild className='flex items-center'>
                                                                 <div className='pt-0 mt-0 flex items-center place-content-center cursor-pointer'>
                                                                     <Avatar>
-                                                                        <AvatarImage src={`${session.user?.image}`} alt="user-image" className='border-borderColor rounded-full border-[1.4px]' />
+                                                                        <AvatarImage src={`${session.user?.image}`} alt="user-image" className='border-borderColor w-8 h-8 !rounded-full border-[1.4px]' />
                                                                         <AvatarFallback>CN</AvatarFallback>
                                                                     </Avatar>
                                                                     <div className="flex flex-col h-[25px] justify-center place-content-center">
@@ -607,3 +646,4 @@ const Navbar = ({ currency, country }: Props) => {
 }
 
 export default Navbar
+

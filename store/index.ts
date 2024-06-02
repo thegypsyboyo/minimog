@@ -1,3 +1,4 @@
+/* eslint-disable import/no-named-as-default */
 import { configureStore, combineReducers } from "@reduxjs/toolkit";
 // import thunk from "redux-thunk"
 import storage from "redux-persist/lib/storage";
@@ -13,8 +14,10 @@ import {
 // import thunk from "redux-thunk";
 import cart from "./cartSlice"
 import expandSidebar from "./ExpandSlice";
+import dialog from "./dialogSlice";
+import languageSlice from "./languageSlice";
 
-const reducers = combineReducers({ cart, expandSidebar });
+const reducers = combineReducers({ cart, dialog, expandSidebar, language: languageSlice });
 
 const config = {
     key: "root",

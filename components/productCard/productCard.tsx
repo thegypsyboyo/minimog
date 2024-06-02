@@ -15,7 +15,7 @@ interface Props {
 
 export default function ProductCard({ product }: Props) {
 
-    console.log("product", product?.name)
+    // console.log("product", product)
     const [active, setActive] = useState<number>(0);
     const [images, setImages] = useState<any>(product?.subProducts[active]?.images);
 
@@ -26,7 +26,7 @@ export default function ProductCard({ product }: Props) {
         ))
     )
 
-    console.log("Prices Array Active:", prices)
+    // console.log("Prices Array Active:", prices)
     const [styless, setStyles] = useState(
         product?.subProducts.map((p: any) => p.color)
     )
@@ -37,7 +37,7 @@ export default function ProductCard({ product }: Props) {
             product?.subProducts[active]?.sizes.map((s: any) => s.price).sort((a: any, b: any) => a - b)
         )
     }, [active, product])
-    console.log("Access images from styles:", styless.image)
+    // console.log("Access images from styles:", styless.image)
     return (
         <div className='relative w-full paddingss md:w-[33.33%] lg:w-[25%]'>
             <div className="w-full h-[500px] lg:h-[360px] cursor-pointer">

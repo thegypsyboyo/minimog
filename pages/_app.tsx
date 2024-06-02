@@ -19,6 +19,7 @@ import { ToastContainer } from "react-toastify";
 import store from "@/store";
 import { PersistGate } from "redux-persist/integration/react";
 import "react-toastify/dist/ReactToastify.css";
+import { TooltipProvider } from "@/components/ui/tooltip";
 
 
 interface MyAppProps extends AppProps {
@@ -60,9 +61,11 @@ export default function App({
               pauseOnHover
               theme="colored"
             />
-            <main className={`font-noto ${noto.variable}`}>
-              <Component {...pageProps} />
-            </main>
+            <TooltipProvider>
+              <main className={`font-noto ${noto.variable}`}>
+                <Component {...pageProps} />
+              </main>
+            </TooltipProvider>
           </PersistGate>
         </Provider>
       </SessionProvider>

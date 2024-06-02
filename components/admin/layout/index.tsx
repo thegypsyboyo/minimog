@@ -2,6 +2,7 @@ import React from 'react'
 import { useSelector } from "react-redux";
 
 import Layout from '@/components/layout';
+import DialogModal from "@/components/dialogModal/index"
 import Sidebar from "./sibebar"
 import AdminNavbar from './navbar';
 
@@ -17,12 +18,13 @@ const AdminLayout: React.FC<LayoutType> = ({ children }) => {
 
     return (
         <div className="relative">
+            <DialogModal type={undefined} />
             <Sidebar />
             <div
-                className={`${showSidebar ? "md:ml-[280px]" : "md:ml-[80px]"} transition-all duration-200 ease-in`}
+                className={`${showSidebar ? "md:ml-[250px]" : "md:ml-[80px]"} transition-all duration-200 ease-in`}
             >
                 <AdminNavbar />
-                <Layout className='min-h-screen bg-[#f2edf3] pt-[100px]'>
+                <Layout className='min-h-screen bg-[#ecf0fa] pt-[100px]'>
                     {children}
                 </Layout>
             </div>

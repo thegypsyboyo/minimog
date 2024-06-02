@@ -13,13 +13,13 @@ interface MyInputProps extends FieldAttributes<any> {
 
 const AdminInput: React.FC<MyInputProps> = ({ placeholder, label, type, ...props }) => {
 
-    const [field, meta] = useField(props.name);
+    const [field, meta, helpers] = useField(props.name);
 
     return (
         <div>
             <span>
                 {label}
-                <span className="text-red-600">*</span>
+                <span className="text-[#f8285a] ml-1 font-bold">*</span>
             </span>
             <label
                 className={`border border-[#dbdfe9] flex items-center h-[42px] overflow-hidden rounded-[3px] mt-2 w-full ${meta.touched && meta.error ? "text-red-600" : ""}`}
@@ -29,6 +29,7 @@ const AdminInput: React.FC<MyInputProps> = ({ placeholder, label, type, ...props
                     placeholder={placeholder}
                     {...field}
                     {...props}
+                    onBlur={() => helpers.setTouched(true)} // Mark field as touched on blur
                     className='w-full py-[.7em] px-[1em] outline-none'
                 />
             </label>

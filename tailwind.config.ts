@@ -80,9 +80,14 @@ const config = {
       },
       boxShadow: {
         'main': '0 10px 30px rgba(0,0,0,.1)',
+        "shadow-light": "-8px 12px 18px rgba(218, 222, 232, 1)",
       },
       backgroundImage: {
         gradient: "linear-gradient(90deg, rgba(253,29,29,1) 0%, rgba(252,176,69,1) 100%)",
+        bluegradient: "linear-gradient(to left, rgba(1,98, 232,50%) 0%, rgba(1,98, 232,1) 100%)",
+        redgradient: "linear-gradient(45deg, #f93a5a, #f7778c)",
+        greengradient: "linear-gradient(to left, #48d6a8 0%, #029666 100%)",
+        orangegradient: "linear-gradient(to left, #efa65f, #f76a2d)",
       },
     },
   },

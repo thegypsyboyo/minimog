@@ -25,7 +25,16 @@
     "pages/product/[slug].tsx",
     "store/cartSlice.ts",
     "store/index.ts",
-    "store/ExpandSlice.ts"
+    "store/ExpandSlice.ts",
+    "components/admin/createProduct/colors.js",
+    "components/admin/createProduct/clickToAdd/sizes.js",
+    "components/admin/createProduct/clickToAdd/questions.js",
+    "components/admin/createProduct/clickToAdd/details.js",
+    "pages/api/admin/product/index.js",
+    "pages/admin/dashboard/product/create.tsx",
+    "pages/api/cloudinary/index.js",
+    "components/admin/createProduct/style.js",
+    "components/admin/createProduct/colors/index.js"
   ],
   "exclude": ["node_modules"]
 }

@@ -1,3 +1,6 @@
+/* eslint-disable arrow-body-style */
+/* eslint-disable no-use-before-define */
+/* eslint-disable no-underscore-dangle */
 /* eslint-disable no-unsafe-optional-chaining */
 import React, { useState } from 'react'
 import Navbar from '@/components/home/shared/navbar'
@@ -6,7 +9,7 @@ import db from '@/utils/db'
 import Product from '@/models/Product'
 import Category from '@/models/Category'
 import SubCategory from '@/models/SubCategory'
-import { ProductProps } from '@/types/typings'
+// import { ProductProps } from '@/types/typings'
 import User from '@/models/User'
 import axios from 'axios'
 import Head from 'next/head'
@@ -44,16 +47,15 @@ const ProductDetails = ({ country, currency, product }: Props) => {
         <>
             <Head>
                 <title>{product.name}</title>
-                {/* <desc>{product.description}</desc> */}
             </Head>
             <Navbar country={country} currency={currency} />
             <section className="relative py-[120px] pt-[30px] grid place-items-center">
                 {/* {product?.name} */}
                 <div className="text-[14px] font-light">
-                    Home / {product.category.name} / {product?.name}
-                    {/* {product.subCategories.map((sub, index) => (
+                    Home / {product?.category?.name} / {product?.name}
+                    {product.subCategories.map((sub: any, index: any) => (
                         <span key={index}>  {sub.name}  </span>
-                    ))} */}
+                    ))}
                 </div>
                 <Layout>
                     <div className={"relative w-full h-full grid md:grid-cols-[(1fr,350px)] lg:grid-cols-2 gap-8 mt-[50px] overflow-hidden"}>
@@ -70,29 +72,30 @@ const ProductDetails = ({ country, currency, product }: Props) => {
 
 export default ProductDetails
 
-export async function getServerSideProps(context: any): Promise<{ props: Props }> {
+export async function getServerSideProps(context: any) {
     const { query } = context;
     const { slug } = query;
     const { style } = query;
     const size = query.size || 0;
     db.connectDb();
     //------------
-    const product: ProductProps | null = await Product.findOne({ slug })
-        .populate({ path: 'category', model: Category })
-        .populate({ path: "subCategories._id", model: SubCategory })
+    const product: any = await Product.findOne({ slug })
+        .populate({ path: "category", model: Category })
+        .populate({ path: "subCategories", model: SubCategory })
         .populate({ path: "reviews.reviewBy", model: User })
         .lean();
-    const subProduct = product?.subProducts[style] as any;
-    const prices = (subProduct.sizes.map((s: any) => s.price)).sort((a: any, b: any) => a - b)
-
+    const subProduct = product?.subProducts[style];
+    const prices = subProduct?.sizes
+        .map((s: any) => s.price)
+        .sort((a: any, b: any) => a - b);
     const newProduct = {
         ...product,
         style,
-        images: subProduct?.images,
-        sizes: subProduct?.sizes,
-        discount: subProduct?.discount,
-        sku: subProduct?.sku,
-        colors: product?.subProducts.map((p: { color: any }) => p.color),
+        images: subProduct.images,
+        sizes: subProduct.sizes,
+        discount: subProduct.discount,
+        sku: subProduct.sku,
+        colors: product.subProducts.map((p: any) => p.color),
         priceRange: subProduct.discount
             ? `From ${(prices[0] - prices[0] / subProduct.discount).toFixed(2)} to ${(
                 prices[prices.length - 1] -
@@ -101,91 +104,96 @@ export async function getServerSideProps(context: any): Promise<{ props: Props }
             : `From ${prices[0]} to ${prices[prices.length - 1]}$`,
         price:
             subProduct.discount > 0
-                ? (subProduct.sizes[size].price -
-                    subProduct.sizes[size].price / subProduct.discount).toFixed(2)
+                ? (
+                    subProduct.sizes[size].price -
+                    subProduct.sizes[size].price / subProduct.discount
+                ).toFixed(2)
                 : subProduct.sizes[size].price,
-        beforePrice: subProduct.sizes[size].price,
+        priceBefore: subProduct.sizes[size].price,
         quantity: subProduct.sizes[size].qty,
         ratings: [
             {
-                percentage: 76,
+                percentage: calculatePercentage(5),
             },
             {
-                percentage: 16,
+                percentage: calculatePercentage(4),
             },
             {
-                percentage: 6,
+                percentage: calculatePercentage(3),
             },
             {
-                percentage: 4,
+                percentage: calculatePercentage(2),
             },
             {
-                percentage: 0,
+                percentage: calculatePercentage(1),
             },
         ],
-        allSizes: product?.subProducts
-            .map((p: { sizes: any }) => p.sizes)
-            .flat().sort((a: { size: number }, b: { size: number }) => a.size - b.size)
+        reviews: product.reviews.reverse(),
+        allSizes: product.subProducts
+            .map((p: any) => p.sizes)
+            .flat()
+            .sort((a: any, b: any) => a.size - b.size)
             .filter(
-                (element: { size: any }, index: any, array: any[]) =>
-                    array.findIndex((e12: { size: any }) => e12.size === element.size) === index
-            )
+                (element: any, index: any, array: any) =>
+                    array.findIndex((el2: any) => el2.size === element.size) === index
+            ),
+    };
+    function calculatePercentage(num: number) {
+        return (
+            (product.reviews.reduce((a: number, review: any) => {
+                return (
+                    a +
+                    (review.rating === num || review.rating === num + 0.5 ? 1 : 0)
+                );
+            }, 0) *
+                100) /
+            product.reviews.length
+        ).toFixed(1);
     }
-
-    console.log("NewProd", newProduct)
-
     db.disconnectDb();
-    // return {
-    //     props: {
-    //         product: JSON.parse(JSON.stringify(newProduct))
-    //     },
-    // };
+
+
+    // Fetch country name from IP registry
     try {
-        // Fetch country name from IP registry
-        // const ipResponse = await axios.get("https://api.ipregistry.co/?key=beclb0k4pr2to92s");
-        // const countryName = ipResponse.data?.location?.country; // Ensure proper access to country name
+        const ipResponse = await axios.get("https://api.ipregistry.co/?key=beclb0k4pr2to92s");
+        const countryName = ipResponse.data?.location?.country; // Ensure proper access to country name
         // console.log("Country Name:", countryName);
 
         // Fetch country data from Rest Countries API
-        // const countryResponse = await axios.get(`https://restcountries.com/v2/name/${(countryName.name)}`);
-        const countryResponse = await axios.get(`https://restcountries.com/v2/name/netherlands`);
+        const countryResponse = await axios.get(`https://restcountries.com/v2/name/${(countryName.name)}`);
+        // const countryResponse = await axios.get(`https://restcountries.com/v2/name/netherlands`);
 
         // console.log("Country Response:", countryResponse.data);
 
         // Extract country and currency information
         const countryData = countryResponse.data[0];
-        // const country: CountryInfo = {
-        //   name: countryData.name,
-        //   flag: countryData.flags?.svg // or any other flag URL you prefer
-        // };
         const country: CountryInfo = {
-            name: "nethelands",
-            flag: "https://www.iamexpat.nl/sites/default/files/styles/article_full_custom_user_desktop_1x/public/flag-netherlands.jpg" // or any other flag URL you prefer
+            name: countryData.name,
+            flag: countryData.flags?.svg // or any other flag URL you prefer
         };
-        // console.log("Country Info:", country);
-
         const currencyData = countryData.currencies[0];
         const currency: CurrencyInfo = {
             code: currencyData.code,
             name: currencyData.name,
             symbol: currencyData.symbol
         };
-        // console.log("Currency Info:", currency);
-
+        // console.log("related", related);
         return {
             props: {
                 country,
                 currency,
                 product: JSON.parse(JSON.stringify(newProduct)),
-            }
+                // related: JSON.parse(JSON.stringify(related)),
+            },
         };
     } catch (error) {
-        console.error("Error fetching data:", error);
         return {
             props: {
-                product: JSON.parse(JSON.stringify(newProduct)),
                 country: null,
-                currency: null
+                currency: null,
+                product: JSON.parse(JSON.stringify(newProduct)),
+                // related: JSON.parse(JSON.stringify(related)),
+
             }
         };
     }

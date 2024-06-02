@@ -22,7 +22,7 @@ const AdminNavbar = () => {
         dispatch(toggleSidebar());
     };
     return (
-        <section className={`h-[70px] fixed bg-white flex items-center justify-between px-[20px] ${expand ? "w-full md:w-[calc(100%-280px)]" : "w-full md:w-[calc(100%-80px)]"}`}>
+        <section className={`h-[70px] fixed !bg-white z-10 border-b border-b-[#eae8f1] flex items-center justify-between px-[20px] ${expand ? "w-full md:w-[calc(100%-250px)]" : "w-full md:w-[calc(100%-80px)]"}`}>
             <div className="flex items-center">
                 <div className="w-fit md:block hidden cursor-pointer " onClick={() => handleExpand()}>
                     < HiOutlineMenuAlt1 className='text-2xl' />

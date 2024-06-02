@@ -236,3 +236,11 @@
     background-color: rgba(0, 0, 0, 0.1);
     /* color of the track */
 }
+
+.header-span {
+    width: 4px;
+}
+
+.header-span:hover {
+    width: 0;
+}

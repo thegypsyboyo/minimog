@@ -1,5 +1,6 @@
+/* eslint-disable no-nested-ternary */
 import Footer from '@/components/home/shared/footer';
-import Header from '@/components/home/shared/header';
+import HomeHeader from '@/components/home/shared/header';
 import Navbar from '@/components/home/shared/navbar';
 import { cn } from "@/lib/utils"
 import { Jost } from 'next/font/google';
@@ -28,6 +29,8 @@ import FavProduct from '@/components/favProduct';
 import Video from '@/components/favProduct/video';
 import ShopCollection from '@/components/shopCollecction';
 import DressEdit from '@/components/dressEdit';
+import Header from "@/models/home/Header"
+import { useSelector } from 'react-redux';
 
 // import ProductCard from '@/components/productCard/ProductCard';
 
@@ -46,6 +49,21 @@ interface CountryInfo {
   //   emojitwo: string;
   // };
 }
+interface MediaProps {
+  url: string;
+  public_url: string;
+}
+interface SliderProps {
+  _id: string;
+  images: MediaProps[],
+  // alt: string,
+  video: MediaProps[],
+  title: { en: "", fr: "" },
+  description: { en: "", fr: "" },
+  // title: string,
+  // description: string,
+  slug: string,
+}
 
 interface CurrencyInfo {
   code: string;
@@ -57,13 +75,17 @@ interface Props {
   country: CountryInfo | null;
   currency: CurrencyInfo | null;
   products: ProductProps[] | null;
+  headers: SliderProps[];
 }
 
 const productData = arrival as unknown as ProductProps[];
 
-export default function Home({ country, currency, products }: Props) {
+export default function Home({ country, currency, products, headers }: Props) {
   // const { data: session } = useSession()
   // console.log("session", session)
+  const language = useSelector((state: any) => state.language.value);
+
+  console.log("EEnglish:", language)
   const swiperRef = useRef<any>();
   useEffect(() => {
     swiperRef.current?.swiper?.autoplay.stop();
@@ -77,7 +99,7 @@ export default function Home({ country, currency, products }: Props) {
           "font-noto w-full"
         )}
       >
-        <Header />
+        <HomeHeader headers={headers} />
         <ProductIdeas />
         <NewArrivals />
         <Layout>
@@ -201,7 +223,8 @@ export default function Home({ country, currency, products }: Props) {
 export async function getServerSideProps(): Promise<{ props: Props }> {
   db.connectDb();
   const products = await Product.find().sort({ createdAt: -1 }).lean();
-  console.log("Products:", products)
+  const test = await Header.find({}).sort({ createAt: -1 }).lean();
+  // console.log("Header:", test)
   try {
     // Fetch country name from IP registry
     // const ipResponse = await axios.get("https://api.ipregistry.co/?key=beclb0k4pr2to92s");
@@ -238,16 +261,19 @@ export async function getServerSideProps(): Promise<{ props: Props }> {
       props: {
         country,
         currency,
+        headers: JSON.parse(JSON.stringify(test)),
         products: JSON.parse(JSON.stringify(products)),
       }
     };
   } catch (error) {
-    console.error("Error fetching data:", error);
+    // console.error("Error fetching data:", error);
     return {
       props: {
         products: JSON.parse(JSON.stringify(products)),
         country: null,
-        currency: null
+        currency: null,
+        headers: JSON.parse(JSON.stringify(test)),
+
       }
     };
   }

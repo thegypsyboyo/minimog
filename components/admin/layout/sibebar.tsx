@@ -7,18 +7,88 @@ import Image from 'next/image';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { ImUsers } from "react-icons/im";
 import Link from 'next/link';
-import { FaHome, FaThList } from 'react-icons/fa';
+import { FaCompressArrowsAlt, FaThList } from 'react-icons/fa';
 import { IoCreate, IoListCircleSharp } from 'react-icons/io5';
 import { MdOutlineCategory } from "react-icons/md";
 import { BsPatchPlus } from 'react-icons/bs';
 import { BiSolidCategory } from "react-icons/bi";
 import {
     RiCoupon3Fill,
+    RiLayout4Fill,
     // RiLogoutCircleFill,
     // RiSettingsLine,
 } from "react-icons/ri";
 import { AiOutlineStock } from 'react-icons/ai';
+// import {
+//     ChevronLeft,
+//     Home,
+//     LineChart,
+//     Package,
+//     Package2,
+//     PanelLeft,
+//     PlusCircle,
+//     Search,
+//     Settings,
+//     ShoppingCart,
+//     Upload,
+//     Users2,
+// } from "lucide-react"
 
+// import { Badge } from "@/components/ui/badge"
+// import {
+//     Breadcrumb,
+//     BreadcrumbItem,
+//     BreadcrumbLink,
+//     BreadcrumbList,
+//     BreadcrumbPage,
+//     BreadcrumbSeparator,
+// } from "@/components/ui/breadcrumb"
+// import { Button } from "@/components/ui/button"
+// import {
+//     Card,
+//     CardContent,
+//     CardDescription,
+//     CardFooter,
+//     CardHeader,
+//     CardTitle,
+// } from "@/components/ui/card"
+// import {
+//     DropdownMenu,
+//     DropdownMenuContent,
+//     DropdownMenuItem,
+//     DropdownMenuLabel,
+//     DropdownMenuSeparator,
+//     DropdownMenuTrigger,
+// } from "@/components/ui/dropdown-menu"
+// import { Input } from "@/components/ui/input"
+// import { Label } from "@/components/ui/label"
+// import {
+//     Select,
+//     SelectContent,
+//     SelectItem,
+//     SelectTrigger,
+//     SelectValue,
+// } from "@/components/ui/select"
+// import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
+// import {
+//     Table,
+//     TableBody,
+//     TableCell,
+//     TableHead,
+//     TableHeader,
+//     TableRow,
+// } from "@/components/ui/table"
+// import { Textarea } from "@/components/ui/textarea"
+// import {
+//     ToggleGroup,
+//     ToggleGroupItem,
+// } from "@/components/ui/toggle-group"
+import {
+    Tooltip,
+    TooltipContent,
+    TooltipTrigger,
+} from "@/components/ui/tooltip"
+import { LucideLayoutDashboard } from 'lucide-react';
 
 const Sibebar = () => {
     const router = useRouter();
@@ -39,15 +109,15 @@ const Sibebar = () => {
     // };
 
     return (
-        <div className={`fixed h-full md:block hidden min-h-screen w-[80px] transition-all  duration-200 ease-in bg-white ${expand ? "w-[280px]" : ""}`}>
-            <div className={`transition-all h-[70px] w-full flex items-center duration-100 ease-in justify-start px-[20px]`}>
+        <div className={`fixed h-full md:block hidden min-h-screen  transition-all  duration-200 ease-in ${expand ? "w-[250px]" : "80px"}`}>
+            <div className={`transition-all h-[70px] w-full flex items-center duration-100 ease-in justify-center border-b border-b-[#eae8f1] px-[20px] ${expand ? "!w-[250px]" : "!w-[80px]"}`}>
                 {expand ? (
                     <Image
                         src={"/images/logo.png"}
                         width={1200}
                         height={1200}
                         alt='logo'
-                        className='w-[160px] h-auto object-contain'
+                        className='w-[140px] h-auto object-contain'
                     />
 
                 ) : (
@@ -60,22 +130,22 @@ const Sibebar = () => {
                     />
                 )}
             </div>
-            <nav className="w-full relative h-screen  overflow-y-hidden hover:overflow-y-auto ">
-                <ul className="w-full flex flex-col gap-5 px-[20px] ">
-                    <li className="mt-4">
+            <nav className={`relative h-screen  overflow-y-hidden hover:overflow-y-auto border-solid border-transparent border-r-[4px] hover:border-r-0 ${expand ? "w-[250px]" : "80px"}`}>
+                <ul className="w-full flex text-base  flex-col gap-5 px-[20px] ">
+                    <li className="mt-4 mb-9">
                         {expand ? (
-                            <div className='pt-0 mt-0 w-full flex items-center cursor-pointer gap-5'>
+                            <div className='pt-0 mt-0 w-full flex flex-col justify-center  items-center cursor-pointer gap-5'>
                                 <div className="w-fit relative">
-                                    <Avatar>
+                                    <Avatar className='w-14 h-14 object-cover rounded-full border-solid border-[2px] shadow-main border-[#eae8f1]'>
                                         <AvatarImage src={`${session?.user?.image}`} alt="user-image" className='rounded-full' />
                                         <AvatarFallback>Adm</AvatarFallback>
                                     </Avatar>
-                                    <span className="absolute w-[10px] h-[10px] rounded-full bg-[#1bc4b4] transform -translate-y-1/2 top-1/2 -right-[3px]" />
+                                    <span className="absolute w-[10px] h-[10px] rounded-full bg-[#22c03c] transform -translate-y-1/2 top-[45px] -right-[1px]" />
                                 </div>
                                 <div className="flex justify-between items-start">
                                     <div className="">
-                                        <h1 className='text-black text-base font-medium capitalize p-0 leading-0 m-0'>{`${session?.user?.name}`}</h1>
-                                        <h2 className='text-black text-xs font-medium lowercase p-0 leading-0 m-0 w-[90px] '>{`${session?.user?.email}`}</h2>
+                                        <h1 className='text-black text-lg font-medium capitalize p-0 leading-0 m-0'>{`${session?.user?.name}`}</h1>
+                                        <h2 className='text-[#7987a1] text-xs font-medium lowercase p-0 leading-0 m-0 w-[90px] '>{`${session?.user?.email}`}</h2>
                                     </div>
                                     <Image
                                         src={"/images/bluetick.png"}
@@ -89,31 +159,47 @@ const Sibebar = () => {
                             </div>
 
                         ) : (
-                            <div className='relative group '>
-                                <Avatar>
-                                    <AvatarImage src={`${session?.user?.image}`} alt="user-image" className='rounded-full' />
-                                    <AvatarFallback>Admin</AvatarFallback>
-                                </Avatar>
-                                <span className='absolute top-1/2 transform -translate-y-1/2 group-hover:left-full left-0 opacity-0 group-hover:opacity-100 transition-all duration-100 ease-in px-[40px] h-[70px] bg-white flex items-center justify-center ml-[20px]'>Admin</span>
-                            </div>
+                            <Tooltip>
+                                <TooltipTrigger asChild>
+                                    <Link
+                                        href="#"
+                                    >
+                                        <Avatar>
+                                            <AvatarImage src={`${session?.user?.image}`} alt="user-image" className='rounded-full' />
+                                            <AvatarFallback>Admin</AvatarFallback>
+                                        </Avatar>
+                                        <span className="sr-only">Admin</span>
+                                    </Link>
+                                </TooltipTrigger>
+                                <TooltipContent side="right" className='bg-white'>Admin Profile</TooltipContent>
+                            </Tooltip>
                         )}
                     </li>
-
-                    <li className={`${route === undefined ? "text-blue-500 text-lg" : ""} mt-5`}>
+                    <li className={`${route === undefined ? "text-blue-500 text-lg" : ""} mt-0`}>
                         {expand ? (
                             <Link href="/admin/dashboard" >
-                                <span className={`flex justify-between items-center`}>
-                                    <span className={"text-base"}>Dashboard</span>
-                                    <FaHome className={""} />
-                                </span>
+                                <div className={`flex justify-between items-center w-full `}>
+                                    <div className="flex gap-3 items-center">
+                                        <RiLayout4Fill className={"text-2xl"} />
+                                        <span className={"text-sm font-medium"}>Dashboard</span>
+                                    </div>
+                                    <span className="bg-[#22c03c] text-xs w-2.5 flex items-center justify-center h-4 text-[#ecf0fa]">1</span>
+                                    {/* <BsChevronRight className='text-base' /> */}
+                                </div>
                             </Link>
 
                         ) :
-
-                            <div className='relative group flex flex-col justify-center items-center'>
-                                <FaHome className='!text-2xl' />
-                                <span className='absolute top-1/2 transform -translate-y-1/2 group-hover:left-full left-0 opacity-0 group-hover:opacity-100 transition-all duration-100 ease-in px-[40px] h-[70px] bg-white flex items-center justify-center ml-[20px]'>Dashboard</span>
-                            </div>
+                            <Tooltip>
+                                <TooltipTrigger asChild>
+                                    <Link
+                                        href="#"
+                                        className='flex items-center justify-center'
+                                    >
+                                        <LucideLayoutDashboard className={"text-base"} />                                        <span className="sr-only">Home</span>
+                                    </Link>
+                                </TooltipTrigger>
+                                <TooltipContent side="right" className='bg-white'>Home</TooltipContent>
+                            </Tooltip>
                         }
                     </li>
                     <li className={`${route === "sales" ? "text-blue-500 text-lg" : ""} mt-2`}>
@@ -121,17 +207,30 @@ const Sibebar = () => {
                             <Link href="/admin/dashboard/sales" >
                                 <span className={`flex justify-between items-center`}>
                                     <span className={""}>Sales</span>
-                                    <AiOutlineStock className={""} />
+                                    <FaCompressArrowsAlt className={""} />
                                 </span>
                             </Link>
 
                         ) :
 
-                            <Link href="/admin/dashboard/sales"
-                                className='relative group flex flex-col justify-center items-center'>
-                                <AiOutlineStock className='!text-2xl' />
-                                <span className='absolute top-1/2 transform -translate-y-1/2 group-hover:left-full left-0 opacity-0 group-hover:opacity-100 transition-all duration-100 ease-in px-[40px] h-[70px] bg-white flex items-center justify-center ml-[20px]'>Sales</span>
-                            </Link>
+                            // <Link href="/admin/dashboard/sales"
+                            //     className='relative group flex flex-col justify-center items-center'>
+                            //     <AiOutlineStock className='!text-2xl' />
+                            //     <span className='absolute top-1/2 transform -translate-y-1/2 group-hover:left-full left-0 opacity-0 group-hover:opacity-100 transition-all duration-100 ease-in px-[40px] h-[70px] bg-white flex items-center justify-center ml-[20px]'>Sales</span>
+                            // </Link>
+                            <Tooltip>
+                                <TooltipTrigger asChild>
+                                    <Link
+                                        href="/admin/dashboard/sales"
+                                        className='flex items-center justify-center'
+                                    >
+                                        <AiOutlineStock className='!text-2xl' />
+                                        <span className="sr-only">Sales</span>
+                                    </Link>
+                                </TooltipTrigger>
+                                <TooltipContent side="right" className='bg-white'>Sales</TooltipContent>
+                            </Tooltip>
+
                         }
                     </li>
                     <li className={`${route === "orders" ? "text-blue-500 text-lg" : ""} mt-2`}>
@@ -145,11 +244,24 @@ const Sibebar = () => {
 
                         ) :
 
-                            <Link href="/admin/dashboard/orders"
-                                className='relative group flex flex-col justify-center items-center'>
-                                <IoListCircleSharp className='!text-2xl' />
-                                <span className='absolute top-1/2 transform -translate-y-1/2 group-hover:left-full left-0 opacity-0 group-hover:opacity-100 transition-all duration-100 ease-in px-[40px] h-[70px] bg-white flex items-center justify-center ml-[20px]'>Orders</span>
-                            </Link>
+                            // <Link href="/admin/dashboard/orders"
+                            //     className='relative group flex flex-col justify-center items-center'>
+                            //     <IoListCircleSharp className='!text-2xl' />
+                            //     <span className='absolute top-1/2 transform -translate-y-1/2 group-hover:left-full left-0 opacity-0 group-hover:opacity-100 transition-all duration-100 ease-in px-[40px] h-[70px] bg-white flex items-center justify-center ml-[20px]'>Orders</span>
+                            // </Link>
+                            <Tooltip>
+                                <TooltipTrigger asChild>
+                                    <Link
+                                        href="/admin/dashboard/orders"
+                                        className='flex items-center justify-center'
+                                    >
+                                        <IoListCircleSharp className='!text-2xl' />
+                                        <span className="sr-only">Orders</span>
+                                    </Link>
+                                </TooltipTrigger>
+                                <TooltipContent side="right" className='bg-white'>Orders</TooltipContent>
+                            </Tooltip>
+
                         }
                     </li>
                     <li className={`${route === "orders" ? "text-blue-500 text-lg" : ""} mt-2`}>
@@ -172,7 +284,7 @@ const Sibebar = () => {
                     </li>
                     <li className={`${route === "product/all" ? "text-blue-500 text-lg" : ""} mt-2`}>
                         {expand ? (
-                            <Link href="/admin/dashboard/orders" >
+                            <Link href="/admin/product/all" >
                                 <span className={`flex justify-between items-center`}>
                                     <span className={""}>All Products</span>
                                     <FaThList className={""} />
@@ -296,27 +408,6 @@ const Sibebar = () => {
                             </Link>
                         }
                     </li>
-
-                    {/* <li className='transition-all duration-300 ease-linear'>
-                        <button onClick={toggleDropdown} className='flex items-center justify-between w-full transition-all duration-300 ease-in'>
-                            Products
-                            <span className='flex items-center gap-2 text-base'>
-                                {isDropdownOpen ? <MdKeyboardArrowDown /> : <MdKeyboardArrowLeft />}
-                                <FaCartShopping className='!text-[14px]' />
-                            </span>
-                        </button>
-                        {isDropdownOpen && (
-                            <ul className='transition-all duration-300 p-2 list-disc list-inside font-base text-sm' >
-                                <li className='hover:text-blue-600'>
-                                    <Link href={"/admin/dashboard/create"}>
-                                        Add product
-                                    </Link>
-                                </li>
-                                <li>Edit Product</li>
-                                <li>Product Details</li>
-                            </ul>
-                        )}
-                    </li> */}
                 </ul>
             </nav>
         </div>

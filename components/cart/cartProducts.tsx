@@ -19,13 +19,13 @@ import { TbMinus, TbPlus } from 'react-icons/tb';
 const CartProducts = ({ selected, setSelected, product }: any) => {
     // console.log("PRoducts:", product);
     const [active, setActive] = useState();
-    console.log("Selected Active", active);
+    // console.log("Selected Active", active);
     const { cart } = useSelector((state) => ({ ...(state as Record<string, any>) }));
 
-    console.log("Cart From Cart:", cart)
+    // console.log("Cart From Cart:", cart)
 
     useEffect(() => {
-        const check = selected.find((p) => p._uid == product._uid);
+        const check = selected.find((p: any) => p._uid == product._uid);
         setActive(check);
     }, [product._uid, selected]);
     const dispatch = useDispatch();
@@ -42,12 +42,12 @@ const CartProducts = ({ selected, setSelected, product }: any) => {
         dispatch(updateCart(newCart));
     };
     const removeProduct = (id: any) => {
-        const newCart = cart.cartItems.filter((p) => p._uid != id);
+        const newCart = cart.cartItems.filter((p: any) => p._uid != id);
         dispatch(updateCart(newCart));
     };
     const handleSelect = () => {
         if (active) {
-            setSelected(selected.filter((p) => p._uid !== product._uid));
+            setSelected(selected.filter((p: any) => p._uid !== product._uid));
         } else {
             setSelected([...selected, product]);
         }
@@ -69,24 +69,24 @@ const CartProducts = ({ selected, setSelected, product }: any) => {
                                     src={product.images[0].url} alt=''
                                     width={1400}
                                     height={1400}
-                                    className='w-[140px] min-w-[150px] h-[200px] object-cover'
+                                    className='w-[120px] min-w-[120px] h-[130px] object-cover border border-borderColor rounded-[4px] p-1 overflow-hidden'
                                 />
                                 <div className="">
-                                    <h1 className="text-lg font-semibold">
+                                    <h1 className="text-sm font-medium mb-4">
                                         {product.name.length > 30 ? `${product.name.substring(0, 30)} ...` : product.name}
                                     </h1>
                                     <span className='flex items-center gap-2'>
-                                        <span className='font-bold text-lg'>Color: </span>
+                                        <span className='font-medium text-sm'>Color: </span>
                                         <Image
                                             src={product.color.image}
                                             alt=""
                                             width={30}
                                             height={30}
-                                            className='object-cover rounded-full h-[20px] w-[20px]'
+                                            className='object-cover rounded-full h-[20px]  w-[20px]'
                                         />
                                     </span>
                                     <span className='flex gap-2 items-center'>
-                                        <span className="text-lg font-semibold">
+                                        <span className="text-sm font-medium">
                                             Size:
                                         </span>
                                         {product.size && <span>{product.size}</span>}
@@ -100,7 +100,7 @@ const CartProducts = ({ selected, setSelected, product }: any) => {
                                                 <IoIosRemoveCircle />
 
                                             </span>
-                                            <span className="group-hover:underline underline-offset-2 transition-all duration-300 ease-in">
+                                            <span className="group-hover:underline underline-offset-2 transition-all duration-300 ease-in font-normal">
                                                 Remove
 
                                             </span>

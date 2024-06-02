@@ -1,5 +1,8 @@
 import mongoose, { Schema, Document } from "mongoose";
 
+const { ObjectId } = mongoose.Schema;
+
+
 export interface Address {
     firstName?: string;
     lastName?: string;
@@ -13,6 +16,11 @@ export interface Address {
     active?: boolean;
 }
 
+export interface WishlistItem {
+    product: mongoose.Schema.Types.ObjectId;
+    style: string;
+}
+
 export interface UserDocument extends Document {
     name: string;
     email: string;
@@ -22,6 +30,7 @@ export interface UserDocument extends Document {
     emailVerified: boolean;
     defaultPaymentMethod: string;
     address: Address[];
+    wishlist: WishlistItem[];
 }
 
 const addressSchema = new Schema<Address>(
@@ -42,7 +51,20 @@ const addressSchema = new Schema<Address>(
     },
     { _id: false } // Exclude _id from subdocument
 );
-
+const wishlistSchema = new Schema<WishlistItem>(
+    {
+        product: {
+            type: ObjectId,
+            ref: "Product",
+            required: true,
+        },
+        style: {
+            type: String,
+            required: true,
+        },
+    },
+    { _id: false }
+);
 const userSchema = new Schema<UserDocument>(
     {
         name: {
@@ -77,6 +99,7 @@ const userSchema = new Schema<UserDocument>(
             default: "",
         },
         address: [addressSchema],
+        wishlist: [wishlistSchema],
     },
     {
         timestamps: true,

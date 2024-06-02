@@ -17,7 +17,7 @@ interface MyInputProps extends FieldAttributes<any> {
     handleChange: any,
     placeholder?: string,
     header?: string,
-    disabled?: boolean,
+    disabled?: any,
 
     // Add any additional props specific to your input component
 }
@@ -32,9 +32,9 @@ const SingularSelect: React.FC<MyInputProps> = ({
     const [field, meta] = useField(rest.name);
 
     return (
-        <div className="mt-[1em]">
+        <div className="w-full">
             {header && (
-                <div className={`border border-b-[#ccc] pb-[5px] flex flex-col ${meta.error ? "text-red-600" : ""} `}>
+                <div className={`pb-[5px] flex flex-col ${meta.error ? "text-red-600" : ""} `}>
                     <div className="flex gap-2 items-center">
                         {meta.error && (
                             <Image
@@ -44,26 +44,28 @@ const SingularSelect: React.FC<MyInputProps> = ({
                                 height={90}
                             />
                         )}
-                        {header}
+                        <p className="mb-2 text-[20px] font-medium">
+                            {header}
+                        </p>
                     </div>
                 </div>
             )}
             <TextField
                 variant='outlined'
                 name={field.name}
-                placeholder={"placeholder"}
+                placeholder={placeholder}
                 select
                 label={placeholder}
                 disabled={disabled}
                 value={field.value}
                 onChange={handleChange}
-                className={`w-full mt-[1em] ${meta.touched && meta.error && "text-red-600"}`}
+                className={`w-full p-2 mt-[1em] ${meta.touched && meta.error && "text-red-600"}`}
             >
                 <MenuItem key={""} value="">
                     No Selected / Or Empty
                 </MenuItem>
                 {data?.map((option: any) => (
-                    <MenuItem key={option._id} value={option._id || option.name}>
+                    <MenuItem key={option._id} value={option._id || option.name} className=''>
                         {option.name}
                     </MenuItem>
                 ))}

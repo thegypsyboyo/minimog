@@ -1,3 +1,7 @@
+/* eslint-disable consistent-return */
+/* eslint-disable camelcase */
+/* eslint-disable no-shadow */
+/* eslint-disable no-unused-vars */
 /* eslint-disable no-underscore-dangle */
 /* eslint-disable eqeqeq */
 import { useRouter } from 'next/router'
@@ -11,6 +15,8 @@ import axios from 'axios';
 import { addToCart, emptyCart, updateCart } from '@/store/cartSlice';
 import { BsHeart } from 'react-icons/bs';
 import { PiPackageBold } from "react-icons/pi";
+import { showDialog } from '@/store/dialogSlice';
+import { signIn, useSession } from 'next-auth/react';
 import ProductData from './productData';
 import { ApplePayIcon, GooglePayIcon, MastercardIcon, MetaPayIcon, PayPalIcon, VisaIcon } from '../icons';
 
@@ -26,8 +32,10 @@ const ProductInfo = ({ product, setActiveImg }: any) => {
     const [error, setError] = useState<any>("");
     // const { cart } = useSelector((state) => ({ ...state as any }));
     const { cart } = useSelector((state) => ({ ...state as any }));
+    const { data: session } = useSession();
 
-    console.log("Cart", cart);
+
+    // console.log("Cart", cart);
     useEffect(() => {
         setSize("");
         setQty(1);
@@ -81,6 +89,42 @@ const ProductInfo = ({ product, setActiveImg }: any) => {
         // console.log("Data ------->", data)
     }
 
+    const handleWishlist = async () => {
+        try {
+            if (!session) {
+                return signIn();
+            }
+            const { data } = await axios.put("/api/user/wishlist", {
+                product_id: product._id,
+                style: product.style,
+            });
+            dispatch(
+                showDialog({
+                    header: "Product Added to Whishlist Successfully",
+                    msgs: [
+                        {
+                            msg: data.message,
+                            type: "success",
+                        },
+                    ],
+                })
+            );
+        } catch (error: any) {
+            dispatch(
+                showDialog({
+                    header: "Whishlist Error",
+                    msgs: [
+                        {
+                            msg: error.response.data.message,
+                            type: "error",
+                        },
+                    ],
+                })
+            );
+        }
+    };
+
+
     // console.log("This is a cart:", cart)
 
     return (
@@ -92,7 +136,7 @@ const ProductInfo = ({ product, setActiveImg }: any) => {
                             <h1 className="text-[30px] font-medium text-[#222222]">{product.name}</h1>
                             <h2 className="">{product.sku}</h2>
                         </div>
-                        <div className="w-[45px] h-[45px] rounded-full flex items-center justify-center border border-[#dedede] ">
+                        <div className="w-[45px] h-[45px] rounded-full flex items-center justify-center border border-[#dedede] " onClick={() => handleWishlist()}>
                             <BsHeart />
                         </div>
                     </div>

@@ -9,6 +9,7 @@ const Reviews = ({ product }: any) => {
 
     const { data: session } = useSession();
     const [reviews, setReviews] = useState(product.reviews);
+    console.log("Ratings:", product.ratings.percentage)
 
     return (
         <div className='w-full mt-20'>
@@ -53,7 +54,7 @@ const Reviews = ({ product }: any) => {
                 <div className="mt-10">
                     {session ? (
                         <div className="">
-                            <AddReview product={product} />
+                            <AddReview product={product} setReviews={setReviews} />
                         </div>
                     ) : (
                         <button
