@@ -6,6 +6,8 @@ MONGODB_URL=mongodb+srv://lewisonyango9:lewmeta@cluster0.frrxxsy.mongodb.net/min
 
 
 
+
+
 //-----------NEXTAUTH---------------------------
 
 JWT_SECRET=mpLNgBW.o4Vatw0a6kNvwkwG+b8MaG0GO]9]y\nay:Lxo4Vatw0a6kNvwkwG+b8MaG0GO]9]y\nay:LxWC
