@@ -5,12 +5,12 @@ import Image from 'next/image';
 import React from 'react'
 
 interface Props {
-    _id: string;
-    name: string;
-    slug: string;
-    createdAt: string;
-    updatedAt: string;
-    __v: number;
+    _id?: string;
+    name?: string;
+    slug?: string;
+    createdAt?: string;
+    updatedAt?: string;
+    __v?: number;
 }
 interface MyInputProps extends FieldAttributes<any> {
     data?: Props[],

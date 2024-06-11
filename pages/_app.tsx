@@ -20,6 +20,7 @@ import store from "@/store";
 import { PersistGate } from "redux-persist/integration/react";
 import "react-toastify/dist/ReactToastify.css";
 import { TooltipProvider } from "@/components/ui/tooltip";
+import { PayPalScriptProvider } from "@paypal/react-paypal-js";
 
 
 interface MyAppProps extends AppProps {
@@ -49,23 +50,29 @@ export default function App({
       <SessionProvider session={session}>
         <Provider store={store}>
           <PersistGate loading={null} persistor={persistor}>
-            <ToastContainer
-              position="top-right"
-              autoClose={5000}
-              hideProgressBar={false}
-              newestOnTop={false}
-              closeOnClick
-              rtl={false}
-              pauseOnFocusLoss
-              draggable
-              pauseOnHover
-              theme="colored"
-            />
-            <TooltipProvider>
-              <main className={`font-noto ${noto.variable}`}>
-                <Component {...pageProps} />
-              </main>
-            </TooltipProvider>
+            <PayPalScriptProvider
+              options={[] as any}
+              deferLoading={true}
+            >
+              <ToastContainer
+                position="top-right"
+                autoClose={5000}
+                hideProgressBar={false}
+                newestOnTop={false}
+                closeOnClick
+                rtl={false}
+                pauseOnFocusLoss
+                draggable
+                pauseOnHover
+                theme="colored"
+              />
+              <TooltipProvider>
+                <main className={`font-noto ${noto.variable}`}>
+                  <Component {...pageProps} />
+                </main>
+              </TooltipProvider>
+
+            </PayPalScriptProvider>
           </PersistGate>
         </Provider>
       </SessionProvider>

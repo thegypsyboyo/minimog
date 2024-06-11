@@ -49,7 +49,7 @@ const addressSchema = new Schema<Address>(
             default: false,
         },
     },
-    { _id: false } // Exclude _id from subdocument
+    // { _id: false } // Exclude _id from subdocument
 );
 const wishlistSchema = new Schema<WishlistItem>(
     {

@@ -1,3 +1,4 @@
+/* eslint-disable import/prefer-default-export */
 export const countries = [
     { name: 'Afghanistan', code: 'AF' },
     { name: 'Åland Islands', code: 'AX' },

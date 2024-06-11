@@ -204,7 +204,6 @@ const Products = ({ products }: any) => {
                                                     {product.subProducts[0].sizes[0].qty}
                                                 </TableCell>
                                                 <TableCell className="hidden md:table-cell">
-                                                    {/* 2023-07-12 10:42 AM */}
                                                     {new Date(product.createdAt).toLocaleString("en-Us", {
                                                         weekday: "short",
                                                         year: "numeric",

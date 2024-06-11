@@ -13,11 +13,11 @@ export const saveCart = async (cart: any) => {
     }
 }
 
-export const saveAddress = async (address: any, userId: any) => {
+export const saveAddress = async (address: any) => {
     try {
         const { data } = await axios.post("/api/user/saveAddress", {
             address,
-            userId,
+            // userId,
         });
         return data
     } catch (error: any) {
@@ -36,7 +36,7 @@ export const changeActiveAddress = async (id: String) => {
     }
 };
 
-export const deleteAddress = async (id: String) => {
+export const deleteAddress = async (id: any) => {
     try {
         const { data } = await axios.delete("/api/user/manageAddress", {
             data: { id },
