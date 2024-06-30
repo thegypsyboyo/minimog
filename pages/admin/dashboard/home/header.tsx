@@ -15,7 +15,7 @@ interface SliderProps {
     slug: string,
 }
 type HeaderProps = {
-    headers: SliderProps[];
+    headers: any;
 }
 const HeaderPage: React.FC<HeaderProps> = ({ headers }) => {
 
@@ -44,7 +44,6 @@ export default HeaderPage
 export async function getServerSideProps(ctx: any) {
     await db.connectDb();
     const results = await Header.find().lean();
-    // console.log("results:", results)
     await db.disconnectDb();
     return {
         props: {

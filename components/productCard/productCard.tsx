@@ -37,10 +37,9 @@ export default function ProductCard({ product }: Props) {
             product?.subProducts[active]?.sizes.map((s: any) => s.price).sort((a: any, b: any) => a - b)
         )
     }, [active, product])
-    // console.log("Access images from styles:", styless.image)
     return (
-        <div className='relative w-full paddingss md:w-[33.33%] lg:w-[25%]'>
-            <div className="w-full h-[500px] lg:h-[360px] cursor-pointer">
+        <div className='relative w-full overflow-hidden'>
+            <div className="w-full h-[350px] lg:h-[360px] cursor-pointer">
                 <ProductSwiper images={images} />
             </div>
             {product?.subProducts[active].discount ? (

@@ -1,3 +1,4 @@
+/* eslint-disable no-underscore-dangle */
 /* eslint-disable no-shadow */
 import React from 'react'
 import Image from "next/image"
@@ -60,6 +61,8 @@ import Link from 'next/link'
 
 const Products = ({ products }: any) => {
     const { printProducts, exportAsPDF, exportAsWord, exportAsImage } = useExport();
+
+
     return (
         <div className='bg-white p-5 rounded-[7px] w-full' id='products'>
             <main className="grid flex-1 items-start gap-4 p-4 sm:px-6 sm:py-0 md:gap-8">
@@ -181,61 +184,70 @@ const Products = ({ products }: any) => {
                                         </TableRow>
                                     </TableHeader>
                                     <TableBody>
-                                        {products?.map((product: any, index: any) => (
-                                            <TableRow key={index}>
+                                        {products?.map((product: any, index: any) => {
+                                            const handleEdit = () => {
+                                                window.location.href = `/admin/dashboard/product/create?headerId=${product._id}`;
+                                            };
+                                            return (
+                                                <TableRow key={index}>
 
-                                                <TableCell className="hidden sm:table-cell" >
-                                                    <Image
-                                                        alt="Product image"
-                                                        className="aspect-square rounded-md object-cover"
-                                                        height="64"
-                                                        src={product.subProducts[0].images[0].url}
-                                                        width="64"
-                                                    />
-                                                </TableCell>
-                                                <TableCell className="font-medium max-w-[200px]">
-                                                    {product.name.length > 35 ? `${product.name.substring(0, 28)} ...` : `${product.name}`}
-                                                </TableCell>
-                                                <TableCell>
-                                                    <Badge variant="outline">Draft</Badge>
-                                                </TableCell>
-                                                <TableCell>${product.subProducts[0].sizes[0].price}</TableCell>
-                                                <TableCell className="hidden md:table-cell">
-                                                    {product.subProducts[0].sizes[0].qty}
-                                                </TableCell>
-                                                <TableCell className="hidden md:table-cell">
-                                                    {new Date(product.createdAt).toLocaleString("en-Us", {
-                                                        weekday: "short",
-                                                        year: "numeric",
-                                                        month: "2-digit",
-                                                        day: "numeric",
-                                                        hour: "numeric",
-                                                        minute: "numeric",
-                                                        second: "numeric",
-                                                        // timeZoneName: "short"
-                                                    })}
-                                                </TableCell>
-                                                <TableCell>
-                                                    <DropdownMenu>
-                                                        <DropdownMenuTrigger asChild>
-                                                            <Button
-                                                                aria-haspopup="true"
-                                                                size="icon"
-                                                                variant="ghost"
-                                                            >
-                                                                <MoreHorizontal className="h-4 w-4" />
-                                                                <span className="sr-only">Toggle menu</span>
-                                                            </Button>
-                                                        </DropdownMenuTrigger>
-                                                        <DropdownMenuContent align="end" className='bg-white'>
-                                                            <DropdownMenuLabel>Actions</DropdownMenuLabel>
-                                                            <DropdownMenuItem>Edit</DropdownMenuItem>
-                                                            <DropdownMenuItem>Delete</DropdownMenuItem>
-                                                        </DropdownMenuContent>
-                                                    </DropdownMenu>
-                                                </TableCell>
-                                            </TableRow>
-                                        ))}
+                                                    <TableCell className="hidden sm:table-cell" >
+                                                        <Image
+                                                            alt="Product image"
+                                                            className="aspect-square rounded-md object-cover"
+                                                            height="64"
+                                                            src={product.subProducts[0].images[0].url}
+                                                            width="64"
+                                                        />
+                                                    </TableCell>
+                                                    <TableCell className="font-medium max-w-[200px]">
+                                                        {product.name.length > 35 ? `${product.name.substring(0, 28)} ...` : `${product.name}`}
+                                                    </TableCell>
+                                                    <TableCell>
+                                                        <Badge variant="outline">Draft</Badge>
+                                                    </TableCell>
+                                                    <TableCell>${product.subProducts[0].sizes[0].price}</TableCell>
+                                                    <TableCell className="hidden md:table-cell">
+                                                        {product.subProducts[0].sizes[0].qty}
+                                                    </TableCell>
+                                                    <TableCell className="hidden md:table-cell">
+                                                        {new Date(product.createdAt).toLocaleString("en-Us", {
+                                                            weekday: "short",
+                                                            year: "numeric",
+                                                            month: "2-digit",
+                                                            day: "numeric",
+                                                            hour: "numeric",
+                                                            minute: "numeric",
+                                                            second: "numeric",
+                                                            // timeZoneName: "short"
+                                                        })}
+                                                    </TableCell>
+                                                    <TableCell>
+                                                        <DropdownMenu>
+                                                            <DropdownMenuTrigger asChild>
+                                                                <Button
+                                                                    aria-haspopup="true"
+                                                                    size="icon"
+                                                                    variant="ghost"
+                                                                >
+                                                                    <MoreHorizontal className="h-4 w-4" />
+                                                                    <span className="sr-only">Toggle menu</span>
+                                                                </Button>
+                                                            </DropdownMenuTrigger>
+                                                            <DropdownMenuContent align="end" className='bg-white'>
+                                                                <DropdownMenuLabel>Actions</DropdownMenuLabel>
+                                                                <DropdownMenuItem
+                                                                    onClick={handleEdit}
+                                                                >
+                                                                    Edit
+                                                                </DropdownMenuItem>
+                                                                <DropdownMenuItem>Delete</DropdownMenuItem>
+                                                            </DropdownMenuContent>
+                                                        </DropdownMenu>
+                                                    </TableCell>
+                                                </TableRow>
+                                            )
+                                        })}
                                     </TableBody>
                                 </Table>
                             </CardContent>

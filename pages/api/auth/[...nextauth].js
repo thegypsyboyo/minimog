@@ -1,3 +1,5 @@
+/* eslint-disable eqeqeq */
+/* eslint-disable prefer-template */
 /* eslint-disable no-unused-vars */
 /* eslint-disable no-dupe-keys */
 /* eslint-disable import/no-unresolved */
@@ -76,15 +78,41 @@ export default NextAuth({
     //   from: "<no-reply@example.com>",
     // }),
   ],
+  // callbacks: {
+  //   async session({ session, token }) {
+  //     const user = await User.findById(token.sub);
+  //     session.user._id = token.sub || user._id.toString();
+  //     session.user.role = user.role || "user";
+  //     token.role = user.role || "user";
+  //     return session;
+  //   }
+  // },
   callbacks: {
+    async jwt({ token, trigger, session, user }) {
+      if (trigger === "update" && session) {
+        return { ...token, ...session?.user };
+      }
+      if (user) {
+        token.sub = user.id;
+        token.email = user.email;
+        token.name = user.name;
+        token.image = user.image; // Ensure this is included
+        token.role = user.role;
+      }
+      return { ...token, ...user };
+    },
     async session({ session, token }) {
       const user = await User.findById(token.sub);
       session.user._id = token.sub || user._id.toString();
       session.user.role = user.role || "user";
       token.role = user.role || "user";
+      session.user.email = token.email;
+      session.user.name = token.name;
+      session.user.image = token.image; // Ensure this is included
       return session;
     }
   },
+
   pages: {
     signIn: "/signin"
     // signIn: "/signup"

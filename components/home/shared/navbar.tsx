@@ -1,8 +1,9 @@
-import React, { useEffect, useState } from 'react'
+/* eslint-disable no-unused-vars */
+import React, { ChangeEvent, FormEvent, useEffect, useState } from 'react'
 import Layout from '@/components/layout';
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { BsArrowUp, BsFacebook, BsGift, BsInstagram } from 'react-icons/bs';
-import { FaOpencart, FaRegUser, FaUserAlt } from "react-icons/fa";
+import { FaOpencart, FaRegUser, FaSearch, FaUserAlt } from "react-icons/fa";
 import { MdLogout, MdOutlineChevronRight, MdOutlineLogin, MdSearch } from "react-icons/md";
 import { GiSelfLove } from "react-icons/gi";
 
@@ -46,14 +47,13 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { changeLanguage } from '@/store/languageSlice';
 import { useTranslation } from 'react-i18next';
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
+import { FiSearch } from 'react-icons/fi';
 
 
 interface CountryInfo {
     name: string;
     flag: string;
-    // flag?: {
-    //     emojitwo: string;
-    // };
 }
 
 interface CurrencyInfo {
@@ -65,6 +65,8 @@ interface CurrencyInfo {
 interface Props {
     country: CountryInfo | null;
     currency: CurrencyInfo | null;
+    searchHandler: (search: string) => void;
+
 }
 
 const components: { title: string; href: string; description: string }[] = [
@@ -128,22 +130,17 @@ const ListItem = React.forwardRef<
 ))
 ListItem.displayName = "ListItem"
 
-const Navbar = ({ currency, country }: Props) => {
+const Navbar = ({ currency, country, searchHandler }: Props) => {
     const [isMetaHeaderSticky, setIsMetaHeaderSticky] = useState<boolean>(false);
     const [showButton, setShowButton] = useState(false);
     const router = useRouter();
     const dispatch = useDispatch();
     const currentPath = router.asPath;
-    // const { language } = useSelector((state) => ({ ...(state as Record<string, any>) }));
-
-
-    // console.log("currentpath:", currentPath)
 
     const { data: session } = useSession();
+
     const { cart } = useSelector((state) => ({ ...(state as Record<string, any>) }));
 
-    // console.log("Your Country Info:", country);
-    // console.log("Your Session:", session);
     const isBrowser = () => typeof window !== 'undefined';
 
     const scrollToTop = () => {
@@ -202,10 +199,22 @@ const Navbar = ({ currency, country }: Props) => {
     const { t } = useTranslation();
     const currentLanguage = useSelector((state: any) => state.language.value)
 
-    // console.log("Current language:", currentLanguage);
 
     const handleLanguageChange = (value: string) => {
         dispatch(changeLanguage(value));
+    };
+
+    const [query, setQuery] = useState<string>(router.query.seach as string || "");
+
+    const handleSearch = (e: FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        if (router.pathname !== "/collections") {
+            if (query.length > 1) {
+                router.push(`/collections?search=${query}`);
+            }
+        } else {
+            searchHandler(query);
+        }
     };
 
     return (
@@ -415,15 +424,192 @@ const Navbar = ({ currency, country }: Props) => {
                                     </div>
                                 </div>
                                 <div className="w-[41.667%]">
-                                    <div className="w-full flex items-center gap-0 justify-end">
+                                    <div className="w-full flex items-center gap-2 justify-end">
                                         <div className="block">
                                             <Sheet>
                                                 <SheetTrigger asChild>
                                                     <Button variant="link" className='pt-0 mt-0'><MdSearch className='text-2xl' /></Button>
                                                 </SheetTrigger>
-                                                <SheetContent className="w-full h-[200px] py-[32px] bg-white font-noto" side={"top"}>
-                                                    <Layout className='font-noto'>
-                                                        content
+                                                <SheetContent className="w-full h-[120px] py-[32px] bg-white font-noto" side={"top"}>
+                                                    <Layout className='flex items-center justify-between gap-8 flex-nowrap'>
+                                                        <div className="w-[20%] flex items-start justify-start">
+                                                            <Image src={"/images/logo.png"} width={140} height={140} alt='logo' className='object-contain' />
+                                                        </div>
+                                                        <div className="w-[80%] flex items-center justify-center">
+                                                            <form onSubmit={(e: FormEvent<HTMLFormElement>) => handleSearch(e)} className='relative w-full h-[46px] overflow-hidden'>
+                                                                <input
+                                                                    type="text"
+                                                                    value={query}
+                                                                    onChange={(e: ChangeEvent<HTMLInputElement>) => setQuery(e.target.value)}
+                                                                    className='w-full absolute top-0 left-0 bottom-0 right-0 outline-none border border-black/20 rounded-[5px] border-solid focus:outline-black px-3 py-1.5'
+                                                                    placeholder='Search products'
+                                                                />
+                                                                <button type='submit' className='absolute top-[0px] bottom-0  right-0 py-1.5 px-4'>
+                                                                    <FiSearch className='text-xl' />
+                                                                </button>
+                                                            </form>
+                                                        </div>
+                                                        <div className="w-[20%] flex items-center justify-end gap-5">
+                                                            <div className="lg:block hidden relative">
+                                                                {session ? (
+                                                                    <div className="block">
+                                                                        <div className="flex items-center gap-3">
+                                                                            <HoverCard>
+                                                                                <HoverCardTrigger asChild className='flex items-center'>
+                                                                                    <div className='pt-0 mt-0 flex items-center place-content-center cursor-pointer'>
+                                                                                        <Avatar>
+                                                                                            <AvatarImage src={`${session.user?.image}`} alt="user-image" className='border-borderColor w-8 h-8 !rounded-full border-[1.4px]' />
+                                                                                            <AvatarFallback>CN</AvatarFallback>
+                                                                                        </Avatar>
+                                                                                        <div className="flex flex-col h-[25px] justify-center place-content-center">
+                                                                                            <h3 className="text-primaryForground font-medium leading-[20px] text-sm flex items-center gap-2 h-fit">
+                                                                                                Bonjour 👋,
+                                                                                            </h3>
+                                                                                            <h1 className='text-black text-xs font-medium capitalize p-0 leading-0 m-0 w-[90px] '>{`${session.user?.name}`}</h1>
+                                                                                        </div>
+
+                                                                                    </div>
+
+                                                                                </HoverCardTrigger>
+                                                                                <HoverCardContent className="min-w-[330px]  w-full  bg-white flex flex-col justify-between">
+                                                                                    <div className="">
+                                                                                        <h2 className="text-[18px] leading-10 font-medium mb-[24px] text-black border-b border-b-borderColor">My Account</h2>
+                                                                                        {session ? (
+                                                                                            <div className="flex items-center gap-5">
+                                                                                                <Avatar>
+                                                                                                    <AvatarImage src={`${session.user?.image}`} alt="user-image" className=" bg-yellow-400" />
+                                                                                                    <AvatarFallback>CN</AvatarFallback>
+                                                                                                </Avatar>
+                                                                                                <h3 className="text-primaryForground flex flex-col items-start font-normal ">
+                                                                                                    <span>Hi there,</span>
+                                                                                                    <span className="text-primaryForground capitalize font-medium text-sm">{session.user?.name}</span>
+                                                                                                </h3>
+                                                                                            </div>
+                                                                                        ) : (
+                                                                                            <div className=""></div>
+                                                                                        )}
+                                                                                    </div>
+                                                                                    <div className="mt-6">
+                                                                                        <h3 className=" text-black underline underline-offset-2 text-[20px] font-medium">Welcome back to Minimog</h3>
+                                                                                        <p className="text-sm mt-2 max-w-[330px] ">Its really nice to have you back. use this menu to navigate with ease. Mimimog says thank you for choosing us</p>
+                                                                                        <ul className="w-full">
+                                                                                            <li className="relative py-3.5 flex gap-4 items-center text-base font-normal text-primaryForground   border-b-borderColor border-b  w-full">
+                                                                                                <FaUserAlt />
+                                                                                                <span className="">Profile</span>
+                                                                                            </li>
+                                                                                            <li>
+                                                                                                <Link href="/profile">Account</Link>
+                                                                                            </li>
+                                                                                            <li>
+                                                                                                <Link href="/profile/orders">My Orders</Link>
+                                                                                            </li>
+                                                                                            <li>
+                                                                                                <Link href="/profile/messages">Message Center</Link>
+                                                                                            </li>
+                                                                                            <li>
+                                                                                                <Link href="/profile/address">Address</Link>
+                                                                                            </li>
+                                                                                            <li>
+                                                                                                <Link href="/profile/whishlist">Whishlist</Link>
+                                                                                            </li>
+                                                                                        </ul>
+                                                                                    </div>
+                                                                                    {session ? (
+                                                                                        <div className="w-full relative text-center text-black flex items-center text-lg gap-5 font-medium mt-8 bg-transparent border border-borderColor rounded-[5px] justify-center py-[10px] px-[20px] hover:bg-black hover:text-white transition-all duration-300 ease-in  cursor-pointer" onClick={() => signOut()}>
+                                                                                            <MdLogout />
+                                                                                            Sign out
+                                                                                        </div>
+                                                                                    ) : (
+                                                                                        <div className="">
+                                                                                            <div className="w-full mb-[12px] bg-black px-[30px] py-[10px] rounded-[5px] relative text-center text-white">
+                                                                                                Login
+                                                                                                <Link href={""} className='absolute left-0 top-0 right-0 bottom-0' />
+                                                                                            </div>
+                                                                                            <div className="w-full px-[30px] py-[10px] rounded-[5px] text-center  border-[1px] border-solid border-primaryForground text-black relative ">
+                                                                                                Register
+                                                                                                <Link href={""} className='absolute left-0 top-0 right-0 bottom-0' />
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    )}
+                                                                                </HoverCardContent>
+                                                                            </HoverCard>
+                                                                        </div>
+                                                                    </div>
+                                                                ) : (
+                                                                    <Link href="" className="block">
+                                                                        <div className="flex items-center gap-3">
+                                                                            <HoverCard>
+                                                                                <HoverCardTrigger asChild>
+                                                                                    <Button variant="link" className='pt-0 mt-0 flex gap-4 items-center outline-none !no-underline '>
+                                                                                        <FaRegUser className='text-2xl' />
+                                                                                        <div className="flex items-start flex-col">
+                                                                                            <h3 className="text-primaryForground font-medium leading-[20px] text-sm">New here?</h3>
+                                                                                            <span className='text-black text-sm font-medium'>Sign In / Register</span>
+                                                                                        </div>
+                                                                                    </Button>
+                                                                                </HoverCardTrigger>
+                                                                                <HoverCardContent className="min-w-72  w-full  bg-white flex flex-col justify-between">
+                                                                                    <div className="">
+                                                                                        <h2 className="text-[18px] leading-10 font-medium mb-[24px] text-black border-b border-b-borderColor">My Account</h2>
+                                                                                    </div>
+                                                                                    <div className="mt-0">
+                                                                                        <h3 className="font-medium text-black text-lg underline underline-offset-2">Hello and Welcome to Minimog</h3>
+                                                                                        <p className="mt-2 text-sm font-normal max-w-[330px] ">For maximum experience please create an account with us. Once you have creeated one, an email will be sent to your email for verification. Mimimog awaits your application.</p>
+
+                                                                                    </div>
+                                                                                    {session ? (
+                                                                                        <div className="w-full relative text-center text-black flex items-center justify-center text-lg gap-5 font-medium mt-8 cursor-pointer" onClick={() => signOut()}>
+                                                                                            <MdOutlineLogin />
+                                                                                            Login out
+                                                                                        </div>
+                                                                                    ) : (
+                                                                                        <div className="border-t border-t-black/[80] mt-8">
+                                                                                            <div className="w-full relative text-center text-black flex items-center text-lg gap-5 font-medium mt-7 cursor-pointer bg-transparent border-solid border border-borderColor rounded-[5px] justify-center px-[20px] py-[10px] " onClick={() => signIn()}>
+                                                                                                <MdOutlineLogin />
+                                                                                                Sign In
+                                                                                            </div>
+                                                                                            <div className="w-full relative text-center text-white flex items-center text-base gap-5 font-normal mt-4 cursor-pointer bg-black border-solid border border-borderColor rounded-[5px] px-[20px]  justify-center py-[10px] ">
+                                                                                                <MdOutlineLogin />
+                                                                                                <Link href={`/signup?callbackUrl=${encodeURIComponent(currentPath)}`} className="absolute top-0 left-0 right-0 bottom-0 w-full h-full" />
+                                                                                                Sign Up
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    )}
+                                                                                </HoverCardContent>
+                                                                            </HoverCard>
+
+                                                                        </div>
+                                                                    </Link>
+                                                                )}
+                                                            </div>
+                                                            <div className="lg:block hidden">
+                                                                <TooltipProvider>
+                                                                    <Tooltip>
+                                                                        <TooltipTrigger asChild>
+                                                                            <Link href={"/profile/wishlist"}>
+                                                                                <GiSelfLove className='text-2xl' />
+                                                                            </Link>
+                                                                        </TooltipTrigger>
+                                                                        <TooltipContent className='bg-black text-white rounded-[5px] outline-none border-none'>
+                                                                            <p>Wishlist</p>
+                                                                        </TooltipContent>
+                                                                    </Tooltip>
+                                                                </TooltipProvider>
+                                                            </div>
+                                                            <TooltipProvider >
+                                                                <Tooltip>
+                                                                    <TooltipTrigger asChild>
+                                                                        <Link href={"/cart"} className='relative'>
+                                                                            <FaOpencart className='text-2xl' />
+                                                                            <span className='right-[-12px] w-[23px] h-[23px] bg-red-600 rounded-full top-[-6px] flex items-center justify-center text-white absolute'>{cart?.cartItems?.length}</span>
+                                                                        </Link>
+                                                                    </TooltipTrigger>
+                                                                    <TooltipContent className='bg-black text-white rounded-[5px] outline-none border-none'>
+                                                                        <p>Your cart</p>
+                                                                    </TooltipContent>
+                                                                </Tooltip>
+                                                            </TooltipProvider>
+                                                        </div>
                                                     </Layout>
                                                 </SheetContent>
                                             </Sheet>
@@ -561,49 +747,32 @@ const Navbar = ({ currency, country }: Props) => {
                                             )}
                                         </div>
                                         <div className="lg:block hidden">
-                                            <HoverCard>
-                                                <HoverCardTrigger asChild>
-                                                    <Button variant="link" className='pt-0 mt-0'><GiSelfLove className='text-2xl' /></Button>
-                                                </HoverCardTrigger>
-                                                <HoverCardContent className="w-52 bg-white">
-                                                    <div className="flex justify-between space-x-4">
-                                                        <GiSelfLove className='text-2xl' />
-                                                        <div className="space-y-1">
-                                                            <h4 className="text-sm font-semibold">Your Wishlist</h4>
-                                                            <p className="text-sm">
-                                                                Check out your wish list if you have any
-                                                            </p>
-                                                        </div>
-                                                    </div>
-                                                </HoverCardContent>
-                                            </HoverCard>
+                                            <TooltipProvider>
+                                                <Tooltip>
+                                                    <TooltipTrigger asChild>
+                                                        <Link href={"/profile/wishlist"}>
+                                                            <GiSelfLove className='text-2xl' />
+                                                        </Link>
+                                                    </TooltipTrigger>
+                                                    <TooltipContent className='bg-black text-white rounded-[5px] outline-none border-none'>
+                                                        <p>Wishlist</p>
+                                                    </TooltipContent>
+                                                </Tooltip>
+                                            </TooltipProvider>
                                         </div>
-                                        <div className="">
-                                            <HoverCard>
-                                                <HoverCardTrigger asChild className='mr-0 pr-0'>
-                                                    <Button variant="link" className='pt-0 mt-0 hover:no-underline relative'>
+                                        <TooltipProvider >
+                                            <Tooltip>
+                                                <TooltipTrigger asChild>
+                                                    <Link href={"/profile/wishlist"} className='relative'>
                                                         <FaOpencart className='text-2xl' />
-                                                        <span className='right-[-12px] w-[23px] h-[23px] bg-red-500 rounded-full top-[-6px] flex items-center justify-center text-white absolute'>{cart?.cartItems?.length}</span>
-                                                    </Button>
-                                                </HoverCardTrigger>
-                                                <HoverCardContent className="w-52 bg-white">
-                                                    <div className="flex justify-between space-x-4">
-                                                        <FaOpencart className='text-2xl' />
-                                                        <div className="space-y-1">
-                                                            <h4 className="text-sm font-semibold">Your Cart</h4>
-                                                            {cart.cartItems?.length === 0 ? (
-
-                                                                <p className="text-sm">
-                                                                    Your cart is empty. Lets add something to cart.
-                                                                </p>
-                                                            ) : (
-                                                                <p>{cart.cartItems?.length}</p>
-                                                            )}
-                                                        </div>
-                                                    </div>
-                                                </HoverCardContent>
-                                            </HoverCard>
-                                        </div>
+                                                        <span className='right-[-12px] w-[23px] h-[23px] bg-red-600 rounded-full top-[-6px] flex items-center justify-center text-white absolute'>{cart?.cartItems?.length}</span>
+                                                    </Link>
+                                                </TooltipTrigger>
+                                                <TooltipContent className='bg-black text-white rounded-[5px] outline-none border-none'>
+                                                    <p>Your cart</p>
+                                                </TooltipContent>
+                                            </Tooltip>
+                                        </TooltipProvider>
                                     </div>
                                 </div>
                             </div>

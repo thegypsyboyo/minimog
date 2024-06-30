@@ -110,7 +110,7 @@ export default function Home({ country, currency, products, headers }: Props) {
               <BsChevronRight className='!font-bold' />
             </Link>
           </div>
-          <div className="flex items-start justify-start pb-[60px] flex-wrap ">
+          <div className="grid grid-cols-4 gap-5">
             {products?.map((product, index) => (
               <ProductCard product={product} key={index} />
             ))}

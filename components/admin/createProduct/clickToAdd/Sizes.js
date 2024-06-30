@@ -3,47 +3,45 @@ import { BsFillPatchMinusFill, BsFillPatchPlusFill } from "react-icons/bs";
 import { sizesList } from "@/components/data/sizes";
 import styles from "./styles.module.scss";
 
-export default function Sizes({ sizes, product, setProduct }) {
+export default function Sizes({ sizes, setSizes }) {
+  console.log("Sizes from size:", sizes);
   const [noSize, setNoSize] = useState(false);
+
   const handleSize = (i, e) => {
     const values = [...sizes];
     values[i][e.target.name] = e.target.value;
-    setProduct({ ...product, sizes: values });
+    setSizes(values);
   };
+
   const handleRemove = (i) => {
     if (sizes.length > 1) {
       const values = [...sizes];
       values.splice(i, 1);
-      setProduct({ ...product, sizes: values });
+      setSizes(values);
     }
   };
+
+  const handleToggleSize = () => {
+    if (!noSize) {
+      const data = sizes.map(item => ({ qty: item.qty, price: item.price }));
+      setSizes(data);
+    } else {
+      const data = sizes.map(item => ({
+        size: item.size || "",
+        qty: item.qty,
+        price: item.price,
+      }));
+      setSizes(data);
+    }
+    setNoSize(prev => !prev);
+  };
+
   return (
     <div>
-      <div className={styles.header}>Sizes / Quantity /Price</div>
-      <button
-        type="reset"
-        className={styles.click_btn}
-        onClick={() => {
-          if (!noSize) {
-            const data = sizes.map((item) => ({
-              qty: item.qty,
-              price: item.price,
-            }));
-            setProduct({ ...product, sizes: data });
-          } else {
-            const data = sizes.map((item) => ({
-              size: item.size || "",
-              qty: item.qty,
-              price: item.price,
-            }));
-            setProduct({ ...product, sizes: data });
-          }
-          setNoSize((prev) => !prev);
-        }}
-      >
+      <button type="reset" className={styles.click_btn} onClick={handleToggleSize}>
         {noSize ? "Click if product has size" : "Click if product has no size"}
       </button>
-      {sizes
+      {sizes && sizes.length > 0
         ? sizes.map((size, i) => (
           <div className={styles.clicktoadd} key={i}>
             <select
@@ -81,17 +79,14 @@ export default function Sizes({ sizes, product, setProduct }) {
                 <BsFillPatchMinusFill onClick={() => handleRemove(i)} />
                 <BsFillPatchPlusFill
                   onClick={() => {
-                    setProduct({
-                      ...product,
-                      sizes: [
-                        ...sizes,
-                        {
-                          size: "",
-                          qty: "",
-                          price: "",
-                        },
-                      ],
-                    });
+                    setSizes([
+                      ...sizes,
+                      {
+                        size: "",
+                        qty: "",
+                        price: "",
+                      },
+                    ]);
                   }}
                 />
               </>

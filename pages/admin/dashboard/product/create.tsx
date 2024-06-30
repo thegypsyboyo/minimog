@@ -1,8 +1,10 @@
+/* eslint-disable no-shadow */
+/* eslint-disable object-shorthand */
 /* eslint-disable no-unused-vars */
 /* eslint-disable no-const-assign */
 /* eslint-disable camelcase */
 /* eslint-disable no-use-before-define */
-import { useEffect, useState } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import axios from "axios";
 import * as Yup from "yup";
@@ -13,30 +15,7 @@ import { useDispatch } from "react-redux";
 import ProductHeader from "@/components/admin/product/productHeader";
 import Image from "next/image";
 import { IoMdCreate } from "react-icons/io";
-import {
-    ChevronLeft,
-    Home,
-    LineChart,
-    Package,
-    Package2,
-    PanelLeft,
-    PlusCircle,
-    Search,
-    Settings,
-    ShoppingCart,
-    Upload,
-    Users2,
-} from "lucide-react"
-import { Badge } from "@/components/ui/badge"
-import {
-    Breadcrumb,
-    BreadcrumbItem,
-    BreadcrumbLink,
-    BreadcrumbList,
-    BreadcrumbPage,
-    BreadcrumbSeparator,
-} from "@/components/ui/breadcrumb"
-import { Button } from "@/components/ui/button"
+
 import {
     Card,
     CardContent,
@@ -45,15 +24,6 @@ import {
     CardHeader,
     CardTitle,
 } from "@/components/ui/card"
-import {
-    DropdownMenu,
-    DropdownMenuContent,
-    DropdownMenuItem,
-    DropdownMenuLabel,
-    DropdownMenuSeparator,
-    DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
-import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import {
     Select,
@@ -62,36 +32,21 @@ import {
     SelectTrigger,
     SelectValue,
 } from "@/components/ui/select"
-import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
-import {
-    Table,
-    TableBody,
-    TableCell,
-    TableHead,
-    TableHeader,
-    TableRow,
-} from "@/components/ui/table"
-import { Textarea } from "@/components/ui/textarea"
-import {
-    ToggleGroup,
-    ToggleGroupItem,
-} from "@/components/ui/toggle-group"
-import {
-    Tooltip,
-    TooltipContent,
-    TooltipTrigger,
-} from "@/components/ui/tooltip"
+
+import { useRouter } from "next/router";
+import { GetServerSidePropsContext } from "next";
+import { ClipLoader } from "react-spinners";
+import { WeekNumberLabel } from "react-day-picker";
+import SingularSelect from "@/components/selects/singularSelect";
+import Style from "@/components/admin/createProduct/style";
 import db from "../../../../utils/db";
 import Product from "../../../../models/Product";
 import Category from "../../../../models/Category";
-import SingularSelect from "../../../../components/selects/singularSelect";
 import MultipleSelect from "../../../../components/selects/multipleSelect";
 import AdminInput from "../../../../components/input/adminInput";
-import DialogModal from "../../../../components/dialogModal";
 import { showDialog } from "../../../../store/dialogSlice";
 import Images from "../../../../components/admin/createProduct/images";
 import Colors from "../../../../components/admin/createProduct/colors";
-import Style from "../../../../components/admin/createProduct/style";
 import Sizes from "../../../../components/admin/createProduct/clickToAdd/Sizes";
 import Details from "../../../../components/admin/createProduct/clickToAdd/Details";
 import Questions from "../../../../components/admin/createProduct/clickToAdd/Questions";
@@ -137,19 +92,59 @@ const initialState = {
     ],
     shippingFee: "",
 };
-export default function Create({ parents, categories }: any) {
+
+interface ColorImageProps {
+    color: string,
+    image: string,
+}
+
+interface SizesProps {
+    price: number;
+    qty: number;
+    size: string;
+    _id: string;
+}
+
+export default function Create({ parents, categories, products }: any) {
     const [product, setProduct] = useState(initialState);
+    const [error, setError] = useState("");
     const [subs, setSubs] = useState([]);
-    const [colorImage, setColorImage] = useState("");
+    const [colorImage, setColorImage] = useState<ColorImageProps>();
     const [images, setImages] = useState([]);
-    //   const [description_images, setDescription_images] = useState("");
+    const [sizes, setSizes] = useState<SizesProps[]>([]);
+    const [sku, setSku] = useState("");
+    const [discount, setDiscount] = useState<number>(0);
     const [loading, setLoading] = useState(false);
     const dispatch = useDispatch();
-    console.log(product);
+    const router = useRouter();
+
+
+    const { headerId } = router.query;
+
+    // console.log("Product Prefilled:", product);
+
+    useEffect(() => {
+        if (headerId) {
+            const existingProduct = products;
+            if (existingProduct) {
+                setProduct(existingProduct);
+                setImages(existingProduct.subProducts[0].images?.map((img: any) => img.url));
+                setColorImage(existingProduct.subProducts[0].color);
+                setSizes(existingProduct.subProducts[0].sizes.map((ohk: any) => ohk));
+                setSku(existingProduct.subProducts[0].sku);
+                setDiscount(existingProduct.subProducts[0].discount)
+            }
+        }
+    }, [headerId, products]);
+
+    console.log("Color Images:", colorImage?.image)
+    console.log("Subproduct SKU:", sku);
+    console.log("Subproduct DIscount:", discount);
+
     // useEffect(() => {
     //     const getParentData = async () => {
-    //         const { data } = await axios.get(`/api/product/${product.parent || undefined}`);
-    //         // console.log(data);
+    //         const { data } = await axios.get(`/api/product/${product.parent}`);
+    //         console.log(data);
     //         if (data) {
     //             setProduct({
     //                 ...product,
@@ -181,6 +176,8 @@ export default function Create({ parents, categories }: any) {
         const { value, name } = e.target;
         setProduct({ ...product, [name]: value });
     };
+
+
     const validate = Yup.object({
         name: Yup.string()
             .required("Please add a name")
@@ -198,8 +195,15 @@ export default function Create({ parents, categories }: any) {
         color: Yup.string().required("Please add a color"),
         description: Yup.string().required("Please add a description"),
     });
+
+    const urlToBlob = async (url: string): Promise<Blob> => {
+        const response = await fetch(url);
+        const blob = await response.blob();
+        return blob;
+    };
+
     const createProduct = async () => {
-        const test = validateCreateProduct(product, images);
+        const test = validateCreateProduct(product, images, colorImage, sizes);
         if (test === "valid") {
             createProductHandler();
         } else {
@@ -215,47 +219,62 @@ export default function Create({ parents, categories }: any) {
     let style_img = "";
     const createProductHandler = async () => {
         setLoading(true);
-        if (images) {
-            const temp = images.map((img) => dataURItoBlob(img));
-            const path = "product images";
-            const formData = new FormData();
-            formData.append("path", path);
-            temp.forEach((image) => {
-                formData.append("file", image);
+        if (images && images.length > 0) {
+            const imageBlobs = await Promise.all(images.map(urlToBlob));
+            const imageFormData = new FormData();
+            imageFormData.append("path", "product images");
+            imageBlobs.forEach((image, index) => {
+                console.log(`Appending image ${index + 1}: ${image.type}`);
+                imageFormData.append("file", image);
             });
-            uploaded_images = await uploadImages(formData);
+            uploaded_images = await uploadImages(imageFormData);
         }
-        if (product.color.image) {
-            const temp = dataURItoBlob(product.color.image);
+
+        if (colorImage?.image && typeof colorImage.image !== 'string') {
+            const temp = colorImage.image;
+            console.log("Temp data:", temp)
             const path = "product style images";
             const formData = new FormData();
             formData.append("path", path);
             formData.append("file", temp);
             const cloudinary_style_img = await uploadImages(formData);
             style_img = cloudinary_style_img[0].url;
+        } else if (typeof colorImage?.image === 'string') {
+            // If colorImage.image is a URL
+            style_img = colorImage.image;
         }
+
         try {
-            const { data } = await axios.post("/api/admin/product", {
-                ...product,
-                images: uploaded_images,
-                color: {
-                    image: style_img,
-                    color: product.color.color,
-                },
-            });
+            const url = "/api/admin/product";
+            const method = headerId ? "put" : "post";
+
+            const { data } = await axios({
+                method,
+                url,
+                data: {
+                    ...product,
+                    images: uploaded_images,
+                    color: {
+                        image: style_img,
+                        color: colorImage?.color,
+                    },
+                    id: headerId,
+                    sizes,
+                    discount,
+                    sku,
+                }
+            })
+            setError("");
             setLoading(false);
             toast.success(data.message);
         } catch (error: any) {
+            setError(error.response.data.message);
             setLoading(false);
             toast.error(error.response.data.message);
         }
     };
     return (
         <AdminLayout>
-            {/* <div className={"styles.header"}>Create Product</div> */}
-            {loading ? "loading ..." : ""}
-
-            {/* <ProductHeader /> */}
             <div className="">
                 <Formik
                     enableReinitialize
@@ -266,9 +285,9 @@ export default function Create({ parents, categories }: any) {
                         category: product.category,
                         subCategories: product.subCategories,
                         parent: product.parent,
-                        sku: product.sku,
-                        discount: product.discount,
-                        color: product.color.color,
+                        sku: sku,
+                        discount: discount,
+                        color: colorImage?.color,
                         imageInputFile: "",
                         // styleInout: "py-[20px] px-[20px] mt-8 bg-white",
                     }}
@@ -326,7 +345,7 @@ export default function Create({ parents, categories }: any) {
                                                             label="Discount"
                                                             name="discount"
                                                             placholder="Product discount"
-                                                            onChange={handleChange}
+                                                            onChange={(e: ChangeEvent<HTMLInputElement>) => setDiscount(e.target.valueAsNumber)}
                                                         />
                                                     </div>
                                                     <div className="">
@@ -335,7 +354,7 @@ export default function Create({ parents, categories }: any) {
                                                             label="Sku"
                                                             name="sku"
                                                             placholder="Product sku/ number"
-                                                            onChange={handleChange}
+                                                            onChange={(e: ChangeEvent<HTMLInputElement>) => setSku(e.target.value)}
                                                         />
                                                     </div>
                                                     <div className="mt-7">
@@ -354,9 +373,10 @@ export default function Create({ parents, categories }: any) {
                                                     </div>
                                                     <div className="mt-7">
                                                         <Sizes
-                                                            sizes={product.sizes}
-                                                            product={product}
-                                                            setProduct={setProduct}
+                                                            sizes={sizes}
+                                                            // product={product}
+                                                            // setProduct={setProduct}
+                                                            setSizes={setSizes}
                                                         />
                                                     </div>
                                                 </div>
@@ -379,15 +399,14 @@ export default function Create({ parents, categories }: any) {
                                                         />
                                                     </div>
                                                 </div>
-                                                <div className="flex gap-5 items-center justify-end mt-8">
-                                                    <span className="text-xl">
-                                                        Cancel
-                                                    </span>
+                                                <div className="flex gap-5 items-center mt-4">
                                                     <button
-                                                        className={`${"py-[7.4px]  px-[20px] rounded-[5px] bg-[#1b84ff] text-white"} ${"styles.btn__primary"} ${"styles.submit_btn"}`}
+                                                        className={`bg-blue-600 py-2.5 rounded-[3px] px-8 text-white ${loading ? "cursor-not-allowed" : ""}`}
                                                         type="submit"
+                                                        disabled={loading}
                                                     >
-                                                        Create Product
+                                                        {loading && <ClipLoader loading={loading} />}
+                                                        {headerId ? "Update product" : "Create Product"}
                                                     </button>
                                                 </div>
                                             </div>
@@ -402,19 +421,19 @@ export default function Create({ parents, categories }: any) {
                                                         setColorImage={setColorImage}
                                                     />
                                                     <div className={"flex items-center gap-3 mt-5"}>
-                                                        {product.color.image && (
+                                                        {colorImage?.image && (
                                                             <Image
-                                                                src={product?.color?.image}
+                                                                src={colorImage?.image}
                                                                 width={900}
                                                                 height={900}
                                                                 className={"w-[40px] h-[40px] object-cover rounded-full"}
                                                                 alt=""
                                                             />
                                                         )}
-                                                        {product.color.color && (
+                                                        {colorImage?.color && (
                                                             <span
                                                                 className={"w-[40px] h-[40px] rounded-full"}
-                                                                style={{ background: `${product.color.color}` }}
+                                                                style={{ background: `${colorImage?.color}` }}
                                                             ></span>
                                                         )}
                                                     </div>
@@ -423,17 +442,19 @@ export default function Create({ parents, categories }: any) {
                                                     <div className="">
                                                         <Colors
                                                             name="color"
-                                                            product={product}
-                                                            setProduct={setProduct}
+                                                            // product={product}
+                                                            // setProduct={setProduct}
                                                             colorImage={colorImage}
+                                                            setColorImage={setColorImage}
                                                         />
                                                     </div>
                                                     <div className="">
                                                         <Style
                                                             name="styleInput"
-                                                            product={product}
-                                                            setProduct={setProduct}
+                                                            // product={product}
+                                                            // setProduct={setProduct}
                                                             colorImage={colorImage}
+                                                            setColorImage={setColorImage}
                                                         />
                                                     </div>
                                                 </div>
@@ -465,55 +486,6 @@ export default function Create({ parents, categories }: any) {
                                                             handleChange={handleChange}
                                                         />
                                                     )}
-                                                    <Card x-chunk="dashboard-07-chunk-2">
-                                                        <CardHeader>
-                                                            <CardTitle>Product Category</CardTitle>
-                                                        </CardHeader>
-                                                        <CardContent>
-                                                            <div className="grid gap-6 sm:grid-cols-1">
-                                                                <div className="grid gap-3">
-                                                                    <Label htmlFor="category">Category</Label>
-                                                                    <Select>
-                                                                        <SelectTrigger
-                                                                            id="category"
-                                                                            aria-label="Select category"
-                                                                        >
-                                                                            <SelectValue placeholder="Select category" />
-                                                                        </SelectTrigger>
-                                                                        <SelectContent>
-                                                                            <SelectItem value="clothing">Clothing</SelectItem>
-                                                                            <SelectItem value="electronics">
-                                                                                Electronics
-                                                                            </SelectItem>
-                                                                            <SelectItem value="accessories">
-                                                                                Accessories
-                                                                            </SelectItem>
-                                                                        </SelectContent>
-                                                                    </Select>
-                                                                </div>
-                                                                <div className="grid gap-3">
-                                                                    <Label htmlFor="subcategory">
-                                                                        Subcategory (optional)
-                                                                    </Label>
-                                                                    <Select>
-                                                                        <SelectTrigger
-                                                                            id="subcategory"
-                                                                            aria-label="Select subcategory"
-                                                                        >
-                                                                            <SelectValue placeholder="Select subcategory" />
-                                                                        </SelectTrigger>
-                                                                        <SelectContent>
-                                                                            <SelectItem value="t-shirts">T-Shirts</SelectItem>
-                                                                            <SelectItem value="hoodies">Hoodies</SelectItem>
-                                                                            <SelectItem value="sweatshirts">
-                                                                                Sweatshirts
-                                                                            </SelectItem>
-                                                                        </SelectContent>
-                                                                    </Select>
-                                                                </div>
-                                                            </div>
-                                                        </CardContent>
-                                                    </Card>
                                                 </div>
                                             </div>
                                         </div>
@@ -530,15 +502,23 @@ export default function Create({ parents, categories }: any) {
     );
 }
 
-export async function getServerSideProps() {
+export async function getServerSideProps(ctx: GetServerSidePropsContext) {
+
+    const { query } = ctx;
+
+    const headerId = query.headerId || {};
+
     db.connectDb();
     const results = await Product.find().select("name subProducts").lean();
+    const products = await Product.findById(headerId).lean();
+    // console.log("Products:", products)
     const categories = await Category.find().lean();
     db.disconnectDb();
     return {
         props: {
             parents: JSON.parse(JSON.stringify(results)),
             categories: JSON.parse(JSON.stringify(categories)),
+            products: JSON.parse(JSON.stringify(products))
         },
     };
 }

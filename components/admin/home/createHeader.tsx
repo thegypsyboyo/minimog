@@ -122,11 +122,6 @@ const CreateHeader: React.FC<HeaderProps> = ({ setHeaders, headerData, headers }
         }
     }, [headers, headerId]);
 
-
-    // const validate = Yup.object({
-    //     title: Yup.string().required("Header title is required").min(5, "Title must be more than 8 characters").max(100, "Title must be between 8 and 30 characteres"),
-    //     description: Yup.string().required("Description is required").min(5, "Description must be more than 5 characters").max(150, "Description must be between 5 and 150 characteres"),
-    // })
     const validate = Yup.object({
         title: Yup.object({
             en: Yup.string().required("Header title in English is required").min(5, "Title must be more than 5 characters").max(100, "Title must be between 5 and 100 characters"),
@@ -137,11 +132,7 @@ const CreateHeader: React.FC<HeaderProps> = ({ setHeaders, headerData, headers }
             fr: Yup.string().required("Description in French is required").min(5, "Description must be more than 5 characters").max(150, "Description must be between 5 and 150 characters"),
         }),
     });
-    // const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    //     const { value, name } = e.target;
-    //     setHeader({ ...header, [name]: value });
-    //     // setHeaders({ ...header, [name]: value });
-    // }
+
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         const { value, name } = e.target;
         const [field, lang] = name.split('.');
@@ -176,41 +167,10 @@ const CreateHeader: React.FC<HeaderProps> = ({ setHeaders, headerData, headers }
             uploaded_video = await uploadImages(videoFormData);
         }
 
-        // if (images && images.length > 0) {
-        //     const temp = images.map((img) => dataURItoBlob(img));
-        //     console.log("Converted Image Blobs:", temp); // Log converted video Blobs
-
-        //     const path = "header images";
-        //     const formData = new FormData();
-        //     formData.append("path", path);
-        //     temp.forEach((image: any, index) => {
-        //         console.log(`Appending image ${index + 1}: ${image.type}`);
-        //         formData.append("file", image);
-        //     });
-        //     uploaded_images = await uploadImages(formData);
-        // }
-        // if (video && video.length > 0) {
-        //     console.log("Received video files:", video); // Log received video files
-        //     const path = "header videos";
-        //     const formData = new FormData();
-        //     formData.append('path', path);
-        //     video.forEach((file: any, index) => {
-        //         console.log(`Appending video ${index + 1}: ${file.type}`);
-        //         formData.append("file", file);
-        //     });
-        //     uploaded_video = await uploadImages(formData);
-        // }
-
         try {
             setLoading(true);
             const url = headerId ? `/api/admin/home/header` : "/api/admin/home/header"
             const method = headerId ? "put" : "post";
-
-            // const { data } = await axios.post("/api/admin/home/header", {
-            // ...header,
-            // images: uploaded_images.length ? uploaded_images : [],
-            // video: uploaded_video.length ? uploaded_video : [],
-            // });
 
             const { data } = await axios({
                 method,
@@ -225,7 +185,6 @@ const CreateHeader: React.FC<HeaderProps> = ({ setHeaders, headerData, headers }
             setLoading(false);
             toast.success(data.message);
             setHeaders(data.header);
-            // setHeaders((prev: any) => [...prev, data]);
         } catch (error: any) {
             setLoading(false);
             toast.error(error.response.data.message)
@@ -245,10 +204,8 @@ const CreateHeader: React.FC<HeaderProps> = ({ setHeaders, headerData, headers }
                 })
             )
         }
-        // router.push("/admin/dashboard/home/headers")
     }
 
-    // const []
     return (
         <Formik
             enableReinitialize
@@ -257,11 +214,6 @@ const CreateHeader: React.FC<HeaderProps> = ({ setHeaders, headerData, headers }
                 description: header.description,
                 imageFileInput: "",
             }}
-            // initialValues={{
-            //     title: { en: header.title.en || "", fr: header.title.fr || "" },
-            //     description: { en: header.description.en || "", fr: header.description.fr || "" },
-            //     imageFileInput: "",
-            // }}
             validationSchema={validate}
             onSubmit={() => {
                 createHeader();

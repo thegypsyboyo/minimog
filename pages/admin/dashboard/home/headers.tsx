@@ -19,8 +19,6 @@ interface MediaProps {
 }
 
 interface HeaderProps {
-    // title: string;
-    // description: string,
     title: { en: "", fr: "" },
     description: { en: "", fr: "" },
     images: MediaProps[],
@@ -34,7 +32,6 @@ type HeaderTypes = {
 }
 const Headers: React.FC<HeaderTypes> = ({ headers }) => {
 
-    // console.log("Heashj:", headers)
     const [data, setData] = useState<HeaderProps[]>(headers)
     return (
         <AdminLayout>

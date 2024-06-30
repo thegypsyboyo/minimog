@@ -1,3 +1,5 @@
+/* eslint-disable object-shorthand */
+/* eslint-disable no-unused-vars */
 /* eslint-disable consistent-return */
 import nc from "next-connect";
 import slugify from "slugify";
@@ -63,4 +65,63 @@ handler.post(async (req, res) => {
         res.status(500).json({ message: error.message });
     }
 });
+
+handler.put(async (req, res) => {
+    try {
+        const {
+            id,
+            name,
+            description,
+            images,
+            sku,
+            sizes,
+            discount,
+            color,
+        } = req.body;
+        await db.connectDb();
+        const slug = slugify(name, { lower: true });
+        await Product.findByIdAndUpdate(id,
+            {
+                name,
+                slug: slug,
+                description,
+                images,
+                subProducts: [
+                    {
+                        sku: sku,
+                        color: color,
+                        images: images,
+                        sizes: sizes,
+                        discount: discount,
+                    },
+                ]
+            }
+        );
+        await db.disconnectDb();
+
+        // console.log("The ID is:", id)
+        return res.status(200).json({
+            message: "Header has been updated successfully!",
+            product: await Product.find({}).sort({ createdAt: -1 }),
+        });
+    } catch (error) {
+        res.status(500).json({ message: error.message })
+    }
+});
+
+handler.delete(async (req, res) => {
+    try {
+        const { id } = req.body;
+        await db.connectDb();
+        await Product.findByIdAndDelete(id);
+        await db.disconnectDb();
+        return res.json({
+            message: "Header has been deleted successfully",
+            headers: await Product.find({}).sort({ updatedAt: -1 }),
+        });
+    } catch (error) {
+        res.status(500).json({ message: error.message })
+    }
+})
+
 export default handler;

@@ -11,8 +11,8 @@ export const validateEmail = (email: any) => {
     return regextSt.test(email);
 };
 
-export const validateCreateProduct = (product: any, images: any) => {
-    const { sizes } = product;
+export const validateCreateProduct = (product: any, images: any, colorImage: any, sizes: any) => {
+    // const { sizes } = product;
     const { details } = product;
     const { questions } = product;
     const checks = [
@@ -32,7 +32,7 @@ export const validateCreateProduct = (product: any, images: any) => {
             type: "success",
         });
     }
-    if (!product.color.color) {
+    if (!colorImage.color) {
         checks.push({
             msg: `Choose a main product color.`,
             type: "error",
@@ -43,7 +43,7 @@ export const validateCreateProduct = (product: any, images: any) => {
             type: "success",
         });
     }
-    if (!product.color.image) {
+    if (!colorImage.image) {
         checks.push({
             msg: `Choose a product style image.`,
             type: "error",
@@ -165,3 +165,29 @@ export const validateCreateHeader = (images: any, videos: any) => {
     }
     return "valid";
 };
+
+export const validateUserProfile = (images: any) => {
+    const checks = [
+        {
+            msg: "Title and Description added successfully.",
+            type: "success",
+        },
+    ];
+    if (images.length <= 0 && images.lenght > 1) {
+        checks.push({
+            msg: "Choose one image",
+            type: "error",
+        });
+    } else if (images.length < 0) {
+        checks.push({
+            msg: `${images.length} image(s) chosen.`,
+            type: "success",
+        });
+    }
+
+    const errorCheck = checks.find((c) => c.type === "error");
+    if (errorCheck) {
+        return checks;
+    }
+    return "valid";
+}

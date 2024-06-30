@@ -11,11 +11,27 @@ import { GiPhone } from 'react-icons/gi'
 import { IoIosRemoveCircleOutline, IoMdArrowDropupCircle } from 'react-icons/io'
 import { AiOutlinePlus } from 'react-icons/ai'
 import { Form, Formik } from 'formik'
+import {
+    AlertDialog,
+    AlertDialogAction,
+    AlertDialogCancel,
+    AlertDialogContent,
+    AlertDialogDescription,
+    AlertDialogFooter,
+    AlertDialogHeader,
+    AlertDialogTitle,
+    AlertDialogTrigger,
+} from "@/components/ui/alert-dialog"
+import { Button } from "@/components/ui/button"
+import { useRouter } from 'next/router'
 import styles from "./styles.module.scss"
 import { countries } from "../data/countries";
 // import Layout from '../layout'
 import SingularSelect from '../selects/singularSelect'
 import ShippingInput from '../input/shippingInput'
+import { Card, CardContent, CardHeader } from '../ui/card'
+import { Separator } from '../ui/separator'
+
 
 
 const initialValues = {
@@ -35,7 +51,9 @@ const phoneRegExp = /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2
 const Shipping = ({ user, addresses, setAddresses, profile }: any) => {
 
     const [shipping, setShipping] = useState(initialValues);
-    const [visible, setVisible] = useState(!user?.address.length);
+    const [visible, setVisible] = useState(!addresses?.length);
+    const router = useRouter();
+
 
     const {
         firstName,
@@ -106,79 +124,110 @@ const Shipping = ({ user, addresses, setAddresses, profile }: any) => {
     const deleteHandler = async (id: any) => {
         const res = await deleteAddress(id);
         setAddresses(res.address);
+        router.reload();
     }
 
     // console.log("All Address:", addresses)
     return (
 
         <div className={styles.shipping}>
-            <div className={"mt-6"}>
-                <h3>Shipping Information</h3>
-            </div>
-            <div className={styles.addresses} >
-                {addresses?.map((address: any) => (
-                    <div
-                        style={{ position: "relative" }}
-                        key={address._id}
-                    >
-                        <div
-                            className={styles.address__delete}
-                            onClick={() => deleteHandler(address._id)}
-                        >
-                            <IoIosRemoveCircleOutline />
+            {addresses?.map((address: any) => (
+                <Card className="w-full relative" key={address._id} onClick={() => changeActiveHandler(address._id)}>
+                    <div className={(address.active && styles.active)}
+                    />
+                    <CardContent >
+                        <Separator className="my-4" />
+                        <div className="w-full flex justify-between mb-8">
+                            {address.active ?
+                                (
+                                    <span className='text-green-600 text-sm uppercase'>Active Address</span>
+                                )
+                                : (
+                                    <span></span>
+                                )}
+                            <AlertDialog>
+                                <AlertDialogTrigger asChild>
+                                    <Button><span>
+                                        <RiDeleteBin6Line className='text-2xl text-red-600' />
+                                    </span></Button>
+                                </AlertDialogTrigger>
+                                <AlertDialogContent className='bg-white border-none !rounded-[10px]'>
+                                    <AlertDialogHeader>
+                                        <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+                                        <AlertDialogDescription>
+                                            This action cannot be undone. This will permanently delete your selected address.
+                                        </AlertDialogDescription>
+                                    </AlertDialogHeader>
+                                    <AlertDialogFooter>
+                                        <AlertDialogCancel className='rounded-[5px] border-borderColor'>Cancel</AlertDialogCancel>
+                                        <AlertDialogAction onClick={() => deleteHandler(address._id)} className='bg-red-600 text-white rounded-[5px] border-none'>Continue</AlertDialogAction>
+                                    </AlertDialogFooter>
+                                </AlertDialogContent>
+                            </AlertDialog>
                         </div>
-                        <div
-                            className={`border-[1px] ${styles.address} 
-                            ${address?.active && styles.active}`}
-                            key={address._id}
-                            onClick={() => changeActiveHandler(address._id)}
-                        >
-                            <div className={styles.address__side}>
-                                <Image src={user.image} alt="" width={900} height={900} className='rounded-full w-[30px] h-[30px]' />
+                        <div className="grid grid-cols-1 gap-4">
+                            <div className="grid gap-3">
+                                <div className="font-semibold">Shipping Information</div>
+                                <address className="grid gap-0.5 not-italic text-muted-foreground">
+                                    <div className="flex gap-3 justify-between items-center">
+                                        <span>Full name :</span>
+                                        <span>
+                                            {address.firstName} {" "}
+                                            {address.lastName}
+                                        </span>
+                                    </div>
+                                    <div className="flex gap-3 justify-between items-center">
+                                        <span>Address One :</span>
+                                        <span>
+                                            {address.address1}
+                                        </span>
+                                    </div>
+                                    <div className="flex gap-3 justify-between items-center">
+                                        <span>Address Two :</span>
+                                        <span>
+                                            {address.address2}
+                                        </span>
+                                    </div>
+                                    <div className="flex gap-3 justify-between items-center">
+                                        <span>Phone Number :</span>
+                                        <span>
+                                            {address.phoneNumber}
+                                        </span>
+                                    </div>
+                                    <div className="flex gap-3 justify-between items-center">
+                                        <span>State/Province :</span>
+                                        <span>
+                                            {address.state}
+                                        </span>
+                                    </div>
+                                    <div className="flex gap-3 justify-between items-center">
+                                        <span>City :</span>
+                                        <span>
+                                            {address.city}
+                                        </span>
+                                    </div>
+                                    <div className="flex gap-3 justify-between items-center">
+                                        <span>Zipcode :</span>
+                                        <span>{address.zipCode}</span>
+
+                                    </div>
+                                    <div className="flex gap-3 justify-between items-center">
+                                        <span>Country :</span>
+                                        <span>{address.country}</span>
+                                    </div>
+                                </address>
                             </div>
-                            <div className={styles.address__col}>
-                                <span>
-                                    <FaIdCard />
-                                    {address.firstName.toUpperCase()}{" "}
-                                    {address.lastName.toUpperCase()}
-                                </span>
-                                <span>
-                                    <GiPhone />
-                                    {address.phoneNumber}
-                                </span>
-                            </div>
-                            <div className={styles.address__col}>
-                                <span>
-                                    <FaMapMarkerAlt />
-                                    {address.address1}
-                                </span>
-                                <span>{address.address2}</span>
-                                <span>
-                                    {address.city},{address.state},{address.country}
-                                </span>
-                                <span>{address.zipCode}</span>
-                            </div>
-                            <span
-                                className={styles.active__text}
-                                style={{
-                                    display: `${!address.active && "none"}`,
-                                }}
-                            >
-                                <span className='text-green-600'>
-                                    Active
-                                </span>
-                            </span>
                         </div>
-                    </div>
-                ))}
-            </div>
-            <button className={styles.hide_show} onClick={() => setVisible(!visible)}>
+                    </CardContent>
+                </Card>
+            ))}
+            <button className={"border-black/20 rounded-[3px] mt-4 p-2 py-3 border w-full flex items justify-center"} onClick={() => setVisible(!visible)}>
                 {visible ? (
                     <span>
                         <IoMdArrowDropupCircle style={{ fontSize: "2rem", fill: "#222" }} />
                     </span>
                 ) : (
-                    <span>
+                    <span className='flex items-center gap-3 justify-center w-full'>
                         ADD NEW ADDRESS <AiOutlinePlus />
                     </span>
                 )}

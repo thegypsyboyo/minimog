@@ -170,7 +170,6 @@ export default function ClientOrder({
                                         </Button>
                                     </DropdownMenuTrigger>
                                     <DropdownMenuContent align="end" className='bg-white'>
-                                        {/* <DropdownMenuItem>Edit</DropdownMenuItem> */}
                                         <DropdownMenuItem>
                                             <button onClick={() => exportAsPDF("product")} className='cursor-pointer'>
                                                 Export

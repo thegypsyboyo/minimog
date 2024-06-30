@@ -1,3 +1,4 @@
+/* eslint-disable no-shadow */
 /* eslint-disable no-underscore-dangle */
 import AdminLayout from '@/components/admin/layout';
 import ProductCard from '@/components/admin/product/list';
@@ -81,8 +82,8 @@ type ProductTypes = {
     products: ProductProps[];
 }
 
-const AllProducts: React.FC<ProductTypes> = ({ products }) =>
-(
+const AllProducts: React.FC<ProductTypes> = ({ products }) => (
+
     <div>
 
         <AdminLayout>
@@ -113,7 +114,7 @@ const AllProducts: React.FC<ProductTypes> = ({ products }) =>
                             <TableHead className='w-[15%] p-0'>Sku</TableHead>
                             <TableHead className='w-[15%] p-0'>qty</TableHead>
                             <TableHead className='w-[15%] p-0'>price</TableHead>
-                            <TableHead className='w-[15%] p-0'>status</TableHead>
+                            <TableHead className='w-[15%] p-0'> status</TableHead>
                             <TableHead className='w-[12%] p-0'>action</TableHead>
                         </TableRow>
                     </TableHeader>
@@ -129,6 +130,7 @@ const AllProducts: React.FC<ProductTypes> = ({ products }) =>
         </AdminLayout>
     </div>
 )
+
 
 
 export default AllProducts
