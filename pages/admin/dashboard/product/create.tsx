@@ -93,10 +93,10 @@ const initialState = {
     shippingFee: "",
 };
 
-interface ColorImageProps {
-    color: string,
-    image: string,
-}
+// interface ColorImageProps {
+//     color: string,
+//     image: string,
+// }
 
 interface SizesProps {
     price: number;
@@ -109,7 +109,8 @@ export default function Create({ parents, categories, products }: any) {
     const [product, setProduct] = useState(initialState);
     const [error, setError] = useState("");
     const [subs, setSubs] = useState([]);
-    const [colorImage, setColorImage] = useState<ColorImageProps>();
+    const [colorImage, setColorImage] = useState<any>();
+    const [imageColor, setImageColor] = useState("");
     const [images, setImages] = useState([]);
     const [sizes, setSizes] = useState<SizesProps[]>([]);
     const [sku, setSku] = useState("");
@@ -121,7 +122,8 @@ export default function Create({ parents, categories, products }: any) {
 
     const { headerId } = router.query;
 
-    // console.log("Product Prefilled:", product);
+    console.log("COlor Image object after ading:", colorImage);
+    // console.log("Checking products:", products.subProducts[0].color.color);
 
     useEffect(() => {
         if (headerId) {
@@ -419,6 +421,7 @@ export default function Create({ parents, categories, products }: any) {
                                                         images={images}
                                                         setImages={setImages}
                                                         setColorImage={setColorImage}
+                                                        setImageColor={setImageColor}
                                                     />
                                                     <div className={"flex items-center gap-3 mt-5"}>
                                                         {colorImage?.image && (
@@ -430,10 +433,16 @@ export default function Create({ parents, categories, products }: any) {
                                                                 alt=""
                                                             />
                                                         )}
+                                                        {/* {colorImage?.color && (
+                                                            <span
+                                                                className={"w-[40px] h-[40px] rounded-full"}
+                                                                style={{ background: colorImage.color }}
+                                                            ></span>
+                                                        )} */}
                                                         {colorImage?.color && (
                                                             <span
                                                                 className={"w-[40px] h-[40px] rounded-full"}
-                                                                style={{ background: `${colorImage?.color}` }}
+                                                                style={{ background: colorImage.color }}
                                                             ></span>
                                                         )}
                                                     </div>
@@ -446,6 +455,7 @@ export default function Create({ parents, categories, products }: any) {
                                                             // setProduct={setProduct}
                                                             colorImage={colorImage}
                                                             setColorImage={setColorImage}
+                                                            imageColor={imageColor}
                                                         />
                                                     </div>
                                                     <div className="">
@@ -506,7 +516,7 @@ export async function getServerSideProps(ctx: GetServerSidePropsContext) {
 
     const { query } = ctx;
 
-    const headerId = query.headerId || {};
+    const headerId = query.headerId || null;
 
     db.connectDb();
     const results = await Product.find().select("name subProducts").lean();

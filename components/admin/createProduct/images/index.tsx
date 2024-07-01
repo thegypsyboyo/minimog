@@ -18,6 +18,7 @@ import styles from "./styles.module.scss";
 export default function Images({
   images,
   setImages,
+  setImageColor,
   header,
   text,
   name,

@@ -1,15 +1,13 @@
 /* eslint-disable no-shadow */
-import { useField } from "formik";
+import { ErrorMessage, useField } from "formik";
 import { useState } from "react";
 import { ColorExtractor } from "react-color-extractor";
 import { TbArrowUpRightCircle } from "react-icons/tb";
-// import Image from "next/image";
-import Image from "next/image";
 import styles from "./styles.module.scss";
 
 export default function Colors({
-  // product,
-  // setProduct,
+  product,
+  setProduct,
   name,
   colorImage,
   setColorImage,
@@ -19,7 +17,6 @@ export default function Colors({
   const [colors, setColors] = useState([]);
   const [field, meta] = useField(props);
 
-  console.log("Color imagess:", colorImage)
   const renderSwatches = () => colors.map((color, id) => (
     <div
       className={styles.square__color}
@@ -27,7 +24,8 @@ export default function Colors({
       style={{ backgroundColor: color }}
       onClick={() => {
         setColorImage({
-          color: { color, image: colorImage.image },
+          color,
+          image: colorImage?.image || '',
         });
       }}
     >
@@ -36,48 +34,35 @@ export default function Colors({
   ));
 
   return (
-    <div className={"styles.colors w-full bg-green-600"}>
+    <div className={styles.colors}>
       <div
-        className={`w-full ${"styles.header"} ${meta.error[name] ? "text-red-600" : ""
-          }`}
+        className={`${styles.header} ${meta.error[name] ? styles.header__error : ""}`}
       >
-        <div className={"flex items-center justify-center gap-1 w-full"}>
-          {meta.error[name] && < Image
-            src="/images/warning.png"
-            alt=""
-            width={15}
-            height={15}
-          />
-          }
-          <p className="text-lg w-full text-center font-semibold">
-            Pick a color
-          </p>
+        <div className={styles.flex}>
+          {meta.error[name] && <img src="../../../images/warning.png" alt="" />}
+          Pick a product color
         </div>
-        {/* <span>
+        <span>
           {meta.touched && meta.error && (
             <div className={styles.error__msg}>
               <span></span>
               <ErrorMessage name={name} />
             </div>
           )}
-        </span> */}
+        </span>
       </div>
       <input
         type="text"
-        value={colorImage?.color}
+        value={colorImage?.color || ''}
         name={name}
         hidden
         {...field}
         {...props}
       />
-      {/* <div className={styles.colors__infos}></div> */}
+      <div className={styles.colors__infos}></div>
       <div className={toggle ? styles.toggle : ""}>
         <ColorExtractor getColors={(colors) => setColors(colors)}>
-          <img
-            width={50}
-            height={50}
-            className="w-[60px] h-[60px]" src={colorImage} alt="" style={{ display: "none" }} />
-          {/* <span>{colorImage}</span> */}
+          <img src={colorImage?.image || ''} style={{ display: "none" }} alt="Color" />
         </ColorExtractor>
         <div className={styles.wheel}>{renderSwatches()}</div>
       </div>

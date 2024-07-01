@@ -14,11 +14,20 @@ export default function Sizes({ sizes, setSizes }) {
   };
 
   const handleRemove = (i) => {
-    if (sizes.length > 1) {
-      const values = [...sizes];
-      values.splice(i, 1);
-      setSizes(values);
-    }
+    const values = [...sizes];
+    values.splice(i, 1);
+    setSizes(values);
+  };
+
+  const handleAdd = () => {
+    setSizes([
+      ...sizes,
+      {
+        size: "",
+        qty: 0,
+        price: 0,
+      },
+    ]);
   };
 
   const handleToggleSize = () => {
@@ -74,28 +83,21 @@ export default function Sizes({ sizes, setSizes }) {
               value={size.price}
               onChange={(e) => handleSize(i, e)}
             />
-            {!noSize ? (
+            {!noSize && (
               <>
                 <BsFillPatchMinusFill onClick={() => handleRemove(i)} />
-                <BsFillPatchPlusFill
-                  onClick={() => {
-                    setSizes([
-                      ...sizes,
-                      {
-                        size: "",
-                        qty: "",
-                        price: "",
-                      },
-                    ]);
-                  }}
-                />
+                <BsFillPatchPlusFill onClick={handleAdd} />
               </>
-            ) : (
-              ""
             )}
           </div>
         ))
-        : ""}
+        : (
+          !noSize && (
+            <div className={styles.clicktoadd}>
+              <BsFillPatchPlusFill onClick={handleAdd} />
+            </div>
+          )
+        )}
     </div>
   );
 }

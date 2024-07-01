@@ -49,7 +49,7 @@ export default function Style({ setColorImage, colorImage, ...props }: any) {
       reader.onload = (e) => {
         if (e.target?.result) {
           setColorImage({
-            color: colorImage.color,
+            color: colorImage?.color,
             image: e.target.result,
           });
         }

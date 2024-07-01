@@ -1,3 +1,4 @@
+/* eslint-disable no-unsafe-optional-chaining */
 /* eslint-disable no-underscore-dangle */
 import React from 'react'
 import {
@@ -139,10 +140,10 @@ const ProductCard: React.FC<ProductTypes> = ({ product }) => {
                         <span className='font-medium'>01669009</span>
                     </TableCell>
                     <TableCell className='w-[15%] p-0'>
-                        <div className="">{product.subProducts[0].sizes[0].qty}</div>
+                        <div className="">{product.subProducts[0].sizes[0]?.qty}</div>
                     </TableCell>
                     <TableCell className='pl-0 w-[15%]'>
-                        <div className="">{(product.subProducts[0].sizes[0].price).toFixed(2)} $</div>
+                        <div className="">{(product.subProducts[0].sizes[0]?.price)?.toFixed(2)} $</div>
                     </TableCell>
                     <TableCell className='w-[15%] p-0'>
                         <span className="bg-[#dfffea] text-[#17c653] py-[5px] px-[7px] rounded-[3px]">Published</span>
